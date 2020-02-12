@@ -1,43 +1,23 @@
-.hero {
-  width: 100%;
-  color: #333;
+@tailwind base;
+
+/* Begin custom styles */
+body {
+  @apply bg-gray-100;
 }
-.title {
-  margin: 0;
-  width: 100%;
-  padding-top: 80px;
-  line-height: 1.15;
-  font-size: 48px;
+
+h1 {
+  @apply text-5xl;
 }
-.title, .description {
-  text-align: center;
+h2 {
+  @apply text-xl;
 }
-.row {
-  max-width: 880px;
-  margin: 80px auto 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+h3 {
+  @apply text-lg;
 }
-.card {
-  padding: 18px 18px 24px;
-  width: 220px;
-  text-align: left;
-  text-decoration: none;
-  color: #434343;
-  border: 1px solid #9B9B9B;
+a {
+  @apply text-blue-600 underline;
 }
-.card:hover {
-  border-color: #067df7;
-}
-.card h3 {
-  margin: 0;
-  color: #067df7;
-  font-size: 18px;
-}
-.card p {
-  margin: 0;
-  padding: 12px 0 0;
-  font-size: 13px;
-  color: #333;
-}
+/* End custom styles */
+
+@tailwind components;
+@tailwind utilities;
