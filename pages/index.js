@@ -14,7 +14,7 @@ export default () => (
       <div className="row">
         <Link href="https://github.com/zeit/next.js#getting-started">
           <a className="card">
-            <h3>Getting Started &rarr;</h3>
+            <h3>Getting Started NOW!&rarr;</h3>
             <p>Learn more about Next on Github and in their examples</p>
           </a>
         </Link>
