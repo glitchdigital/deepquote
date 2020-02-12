@@ -9,6 +9,7 @@ export default () => (
 
     <div className="hero">
       <h1 className="title">Did they really say that?</h1>
+      <p className="description">@TODO write description here…</p>
       <p className="description">To get started, edit <code>pages/index.js</code> and save to reload.</p>
 
       <div className="row">
