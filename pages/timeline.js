@@ -28,15 +28,15 @@ export default () => {
           <span className="hidden sm:flex leading-none font-bold text-gray-400 text-5xl ml-2">&rdquo;</span>
         </h2>
         <div className="relative">
-          <div className="absolute flex border-l-4 border-dotted" style={{
+          <div className="absolute flex border-l-4 border-gray-300 border-dotted" style={{
               zIndex: '-1',
               width: '10px',
-              top: -20,
+              top: -40,
               bottom: 0,
               left: 48,
             }}/>
-          {citations.map((citation) =>
-            <Citation {...citation}/>
+          {citations.map((citation, i) =>
+            <Citation {...citation} position={i+1}/>
           )}          
         </div>
       </div>

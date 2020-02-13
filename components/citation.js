@@ -1,9 +1,11 @@
 import { Calendar, Link, Tag, NewsPaper } from 'react-zondicons'
 
-export default ({headline, source, domain, tags}) => (
+export default ({headline, source, domain, tags, position}) => (
   <div class="flex mb-5 sm:mb-10">
     <div style={{width: 100}} className="flex-none hidden sm:block">
-      <div style={{height: 40, width: 40}} className="mt-5 m-auto bg-white border-4 rounded-full"/>
+      <div style={{height: 50, width: 50}} className="mt-5 m-auto bg-white border-4 border-gray-300 rounded-full text-center pt-2 text-gray-400 text-lg font-semibold">
+        {position}
+      </div>
     </div>
     <div className="flex-grow">
       <div className="bg-gray-100 hover:bg-white w-full text-left inline-block transition-all duration-300 ease-in-out border shadow-md sm:shadow-lg hover:shadow-xl rounded-lg">
