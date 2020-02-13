@@ -28,8 +28,6 @@ module.exports = async (req, res, callback) => {
   // Add a full stop after the end of every line, if there is not one already
   text = text.replace(/([^\.])\n/g, "$1.\n")
 
-  const trustIndicators = { positive: [], negative: [] }
-
   const quotes = getQuotes(text)
   let quotesWithNumbers = []
   quotes.forEach(quote => {
@@ -43,20 +41,12 @@ module.exports = async (req, res, callback) => {
   // Build word list
   let words = `${structuredData.title} ${structuredData.description} ${structuredData.tags} ${text}`.split(' ')
 
-
   let keywords = []
   getKeywords(words.join(' ')).forEach(word => { 
     keywords.push({
       name: word,
       count: 0
     })
-    // wordOccurrences.forEach(wordOccurance => {
-    //   if (wordOccurance.token === word)
-    //     keywords.push({
-    //       name: word,
-    //       count: 0
-    //     })
-    // })
   })
 
   // Build topic list
@@ -214,25 +204,13 @@ module.exports = async (req, res, callback) => {
       sentencesWithNumbers.push(sentence.replace(/\n/g, ' '))
   })
 
-  if (quotes.length > 1) {
-    trustIndicators.positive.push({ 
-      text: `Multiple quotes cited in article`,
-      description: 'Articles that contain quotes are useful as quotes can be verified.'
-    })
-  } else {
-    trustIndicators.negative.push({
-      text: `No quotes cited in article`,
-      description: 'It is unusual for legitimate news articles not to contain multiple quotes.\nQuotes are useful as they can be verified.'
-    })
-  }
-
   const articleHeadlineSentiment = SentimentIntensityAnalyzer.polarity_scores(structuredData.title)
   const articleTextSentiment = SentimentIntensityAnalyzer.polarity_scores(text)
   const articleOverallSentiment = SentimentIntensityAnalyzer.polarity_scores(`${structuredData.title} ${structuredData.description} ${text}`)
 
-  let articleSentencesSentiment = []
+  let articleSentencesWithSentiment = []
   sentences.forEach(sentence => {
-    articleSentencesSentiment.push({
+    articleSentencesWithSentiment.push({
       length: sentence.replace(/\n/g, ' ').length,
       ...SentimentIntensityAnalyzer.polarity_scores(sentence.replace(/\n/g, ' '))
     })
@@ -241,62 +219,21 @@ module.exports = async (req, res, callback) => {
   const sentiment = {
     headline: articleHeadlineSentiment,
     text: articleTextSentiment,
-    overall: articleOverallSentiment,
-    sentences: articleSentencesSentiment,
+    overall: articleOverallSentiment
   }
 
-  // Highly experimental text score
-  let score = 0;
-
-  quotes.forEach(() => score += 5)
-  quotesWithNumbers.forEach(() => score += 5)
-  sentencesWithNumbers.forEach(() => score += 2)
-
-  if (sentencesWithNumbers.length > 3) {
-    trustIndicators.positive.push({ 
-      text: `Multiple data points found in article`,
-      description: 'Articles that contain multiple data points are useful as quotes can be verified.'
-    })
-  } else if (sentencesWithNumbers.length > 0) {
-    trustIndicators.negative.push({ 
-      text: `Few data points found in article`,
-      description: 'Articles that contain few data points may be suspect as they may be harder to verify.'
-    })
-  } else {
-    trustIndicators.negative.push({ 
-      text: `No data points found in article`,
-      description: 'Articles that contain no data points may be suspect as they may be harder to verify.'
-    })
-  }
-  
   const wordCount = text.split(' ').length;
-  if (wordCount.length > 1500) {
-    score += 20
-  } else if (wordCount.length > 1000) {
-    score += 10
-  } else if (wordCount.length > 500) {
-    score += 5
-  }
 
-  if (score > 50) {
-    trustIndicators.positive.push({
-      text: "Contains detailed and verifiable information",
-      description: 'Articles that contain extensive quotes and specific data points that can be fact checked are easier to verify.'
-    })
-  } else {
-    trustIndicators.negative.push({
-      text: "Contains little detailed and verifiable information",
-      description: 'Articles that are sparse in quotes or specific data points can be hard to verify.'
-    })
-  }
+  // We don't need structured data text property, as full text extraction is much more sophisticated
+  if (structuredData.text) delete structuredData.text
 
+  // Construct article to return
   const article = {
     url,
+    sentences: articleSentencesWithSentiment,
+    //sentencesWithNumbers,
     quotes,
-    quotesWithNumbers,
-    sentencesWithNumbers,
-    trustIndicators,
-    score,
+    //quotesWithNumbers,
     sentiment,
     wordCount,
     structuredData,
@@ -307,16 +244,14 @@ module.exports = async (req, res, callback) => {
 
   await importArticle(article)
 
-  const responseData = article;
-
   if (req.locals && req.locals.useStreamingResponseHandler) {
-    Promise.resolve(responseData)
+    Promise.resolve(article)
   } else {
-    send(res, 200, responseData)
+    send(res, 200, article)
   }
 
   // Trigger AWS Lambda to be frozen
-  if (callback) callback(null, result)
+  if (callback) return callback(null, article)
 }
 
 function getKeywords(text) {
