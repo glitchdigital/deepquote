@@ -17,6 +17,14 @@ h3 {
 a {
   @apply text-blue-600 underline;
 }
+header > nav > a {
+  @apply no-underline block px-2 py-1 font-semibold rounded text-gray-800;
+  &:active,
+  &:hover {
+    @apply underline bg-gray-300 text-gray-900;
+  }
+}
+
 /* End custom styles */
 
 @tailwind components;
