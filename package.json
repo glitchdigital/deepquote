@@ -8,10 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^7.6.0",
     "classname": "0.0.0",
     "compromise": "^13.1.0",
     "dotenv": "^8.2.0",
-    "elasticsearch": "^16.6.0",
     "entity-finder": "^0.5.2",
     "jsdom": "^15.1.1",
     "lorem-ipsum": "^2.0.3",
