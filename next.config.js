@@ -1,4 +1,6 @@
-module.exports = {
+const withPurgeCss = require('next-purgecss')
+
+module.exports = withPurgeCss({
   webpack: (config) => {
     // Fixes npm packages that depend on `fs` module
     config.node = {
@@ -7,4 +9,4 @@ module.exports = {
 
     return config
   }
-}
+})
