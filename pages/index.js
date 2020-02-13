@@ -1,7 +1,7 @@
 import { LoremIpsum } from "lorem-ipsum"
 import Head from '../components/head'
 import Nav from '../components/nav'
-import { Time, NavigationMore } from 'react-zondicons'
+import { Time, NavigationMore,NewsPaper } from 'react-zondicons'
 
 const lorem = new LoremIpsum({
   wordsPerSentence: {
@@ -19,9 +19,9 @@ const Quote = ({id, quote, date}) => (
         </a>
         <span className="hidden sm:flex leading-none font-bold text-gray-400 text-3xl">&rdquo;</span>
       </h2>
-      <p className="p-2 bg-gray-200 absolute bottom-0 w-full">
-        <span className="text-gray-600"><Time/>{date}</span>
-        <a href={`/timeline?id=${id}`} className="text-gray-600 float-right underline"><NavigationMore/></a>
+      <p className="p-2 bg-gray-200 text-gray-600 absolute bottom-0 w-full">
+        <NewsPaper className="ml-2"/><span className="bg-gray-600 text-sm text-white rounded-full p-1 pl-2 pr-2">{Math.floor(Math.random() * 10) + 1}</span>
+        <a href={`/timeline?id=${id}`} className="float-right underline"><NavigationMore/></a>
       </p>
   </div>
 )
