@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "classname": "0.0.0",
+    "lorem-ipsum": "^2.0.3",
     "next": "^9.2.1",
     "postcss-nested": "^4.2.1",
     "react": "^16.12.0",

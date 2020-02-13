@@ -1,22 +1,50 @@
+import { LoremIpsum } from "lorem-ipsum"
 import Head from '../components/head'
 import Nav from '../components/nav'
-import Citation from '../components/citation'
+import { Time, NavigationMore } from 'react-zondicons'
+
+const lorem = new LoremIpsum({
+  wordsPerSentence: {
+    max: 24,
+    min: 3
+  }
+})
+
+const Card = () => (
+  <div className="inline-block relative text-left rounded-lg border bg-white m-2">
+      <h2 className="flex text-center p-4 mb-10 text-justify font-serif">
+        <span className="hidden sm:flex leading-none font-bold text-gray-400 text-3xl">&ldquo;</span>
+        <a href="/timeline" className="flex no-underline text-gray-600 ml-2 mr-2">
+          <span className="flex text-gray-800">{lorem.generateSentences(1)}</span>
+        </a>
+        <span className="hidden sm:flex leading-none font-bold text-gray-400 text-3xl">&rdquo;</span>
+      </h2>
+      <p className="pl-4 pr-4 pt-2 pb-2 bg-gray-200 absolute bottom-0 w-full">
+        <span className="text-gray-600"><Time/>YYYY-MM-DD</span>
+        <a href="/timeline" className="text-gray-600 float-right underline"><NavigationMore/></a>
+      </p>
+  </div>
+)
 
 export default () => {
   return (
-    <div>
-      <Head title="Home" />
+    <>
+      <Head title="Did They Really Say That?" />
       <Nav />
-      <div className="text-center m-auto pl-4 pr-4 sm:p-0" style={{maxWidth: 700}}>
-        <h2 className="flex mb-5 sm:mb-10 text-2xl flex bg-gray-200 p-4 rounded-lg font-serif">
-          <span className="hidden sm:flex leading-none font-bold text-gray-400 text-5xl">&ldquo;</span>
-          <span className="flex text-gray-800">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-          <span className="hidden sm:flex leading-none font-bold text-gray-400 text-5xl">&rdquo;</span>
-        </h2>
-        <Citation headline="First article headline" source="Source #1"/>
-        <Citation headline="Second article headline" source="Source #2"/>
-        <Citation headline="Third article headline" source="Source #3"/>
+      <div className="grid md:grid-cols-3 pl-2 pr-2 mb-2">
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
       </div>
-    </div>
+    </>
   )
 }
