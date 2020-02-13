@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import classname from 'classname'
-import { Home, Search } from 'react-zondicons';
+import { Home, Search } from 'react-zondicons'
 
 const Nav = () => {
-  const [menuOpenState, setMenuOpenState] = useState(false);
-  const toggleMenuOpenState = () => setMenuOpenState(!menuOpenState);
+  const [menuOpenState, setMenuOpenState] = useState(false)
+  const toggleMenuOpenState = () => setMenuOpenState(!menuOpenState)
 
   return (
   <header className={classname("border-b sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3 mb-5", {'bg-white sm:bg-transparent shadow-xl sm:shadow-none': menuOpenState})}>

@@ -27,11 +27,4 @@ const Head = (props) => (
   </NextHead>
 )
 
-Head.propTypes = {
-  title: string,
-  description: string,
-  url: string,
-  ogImage: string
-}
-
 export default Head
