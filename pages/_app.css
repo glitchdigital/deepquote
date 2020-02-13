@@ -24,7 +24,12 @@ header > nav > a {
     @apply underline bg-gray-300 text-gray-900;
   }
 }
-
+svg.-zondicon {
+  @apply relative leading-none fill-current inline mr-2 font-normal;
+  height: 1.2rem;
+  width: 1.2rem;
+  top: -0.1em;
+}
 /* End custom styles */
 
 @tailwind components;

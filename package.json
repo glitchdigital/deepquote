@@ -13,6 +13,7 @@
     "postcss-nested": "^4.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-zondicons": "^1.1.9",
     "tailwindcss": "^1.2.0"
   }
 }

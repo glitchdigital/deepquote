@@ -1,5 +1,6 @@
 import Head from '../components/head'
 import Nav from '../components/nav'
+import { Calendar, Link } from 'react-zondicons';
 
 const Citation = ({headline, source}) => (
   <div class="flex mb-5 sm:mb-10">
@@ -13,8 +14,8 @@ const Citation = ({headline, source}) => (
           <p className="text-xl font-light mb-3">{headline}</p>
         </div>
         <p className="pl-4 pr-4 pt-2 pb-2 bg-gray-200">
-          <span className="text-gray-600">YYYY-MM-DD</span>
-          <span className="text-gray-600 float-right underline">example.com</span>
+          <span className="text-gray-600"><Calendar/>YYYY-MM-DD</span>
+          <span className="text-gray-600 float-right underline"><Link/>example.com</span>
         </p>
       </div>
     </div>
@@ -27,10 +28,10 @@ export default () => {
       <Head title="Home" />
       <Nav />
       <div className="text-center m-auto pl-4 pr-4 sm:p-0" style={{maxWidth: 700}}>
-        <h2 className="flex mb-5 sm:mb-10 text-2xl text-gray-600 flex bg-gray-200 p-4 rounded-lg font-serif">
-          <span className="hidden sm:flex leading-none font-bold text-gray-400 text-4xl">&ldquo;</span>
-          <span className="flex">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
-          <span className="hidden sm:flex leading-none font-bold text-gray-400 text-4xl">&rdquo;</span>
+        <h2 className="flex mb-5 sm:mb-10 text-2xl flex bg-gray-200 p-4 rounded-lg font-serif">
+          <span className="hidden sm:flex leading-none font-bold text-gray-400 text-5xl">&ldquo;</span>
+          <span className="flex text-gray-800">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+          <span className="hidden sm:flex leading-none font-bold text-gray-400 text-5xl">&rdquo;</span>
         </h2>
         <Citation headline="First article headline" source="Source #1"/>
         <Citation headline="Second article headline" source="Source #2"/>
