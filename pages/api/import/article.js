@@ -15,7 +15,9 @@ const { importArticle } = require('lib/db/import')
 // otherwise request completion times can be excessive.
 const OFFLINE_MODE = true
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, callback) => {
+  res.callbackWaitsForEmptyEventLoop = false;
+
   const { url } = queryParser(req)
 
   if (!url)
@@ -303,14 +305,18 @@ module.exports = async (req, res) => {
     text: text.trim()
   }
 
-  importArticle(article)
+  await importArticle(article)
 
-  const responseData = article
+  const responseData = article;
+
   if (req.locals && req.locals.useStreamingResponseHandler) {
-    return Promise.resolve(responseData)
+    Promise.resolve(responseData)
   } else {
-    return send(res, 200, responseData)
+    send(res, 200, responseData)
   }
+
+  // Trigger AWS Lambda to be frozen
+  if (callback) callback(null, result)
 }
 
 function getKeywords(text) {
