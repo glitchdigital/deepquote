@@ -9,12 +9,29 @@
   },
   "dependencies": {
     "classname": "0.0.0",
+    "compromise": "^13.1.0",
+    "dotenv": "^8.2.0",
+    "elasticsearch": "^16.6.0",
+    "entity-finder": "^0.5.2",
+    "jsdom": "^15.1.1",
     "lorem-ipsum": "^2.0.3",
+    "micro": "^9.3.4",
+    "micro-query": "^0.3.0",
+    "mongodb": "^3.5.3",
     "next": "^9.2.1",
     "postcss-nested": "^4.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-zondicons": "^1.1.9",
-    "tailwindcss": "^1.2.0"
+    "readability": "git+https://github.com/mozilla/readability.git",
+    "sbd": "^1.0.16",
+    "stopwords-en": "^0.3.0",
+    "tailwindcss": "^1.2.0",
+    "unfluff": "^3.2.0",
+    "vader-sentiment": "^1.1.3",
+    "web-auto-extractor": "^1.0.17"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.1.2"
   }
 }
