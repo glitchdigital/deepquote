@@ -25,7 +25,7 @@ const Nav = () => {
     <nav className={classname('px-2 pt-2 pb-4 sm:flex sm:p-0', { 'hidden': !menuOpenState })}>
       <div className="relative">
         <Search className="text-gray-500 pointer-events-none" style={{position: 'absolute', left: 14, top: 8}}/>
-        <input aria-label="Search" autocomplete="off" spellcheck="false"  className="mb-1 sm:mb-0 p-1 pl-10 w-full bg-gray-300 outline-none xfocus:shadow-outline border-2 focus:border-blue-500 border-gray-300 focus:bg-white sm:w-auto pl-4 pr-4 focus:shadow-lg rounded-full" placeholder="Search..."/>
+        <input aria-label="Search" autoComplete="off" spellCheck="false"  className="mb-1 sm:mb-0 p-1 pl-10 w-full bg-gray-300 outline-none xfocus:shadow-outline border-2 focus:border-blue-500 border-gray-300 focus:bg-white sm:w-auto pl-4 pr-4 focus:shadow-lg rounded-full" placeholder="Search..."/>
       </div>
       <a href="#" className="border-2 border-transparent mt-1 sm:mt-0 sm:ml-2">Who we are</a>
       <a href="#" className="border-2 border-transparent mt-1 sm:mt-0 sm:ml-2">FAQ</a>

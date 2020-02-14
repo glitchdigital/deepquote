@@ -13,6 +13,7 @@
     "compromise": "^13.1.0",
     "dotenv": "^8.2.0",
     "entity-finder": "^0.5.2",
+    "isomorphic-fetch": "^2.2.1",
     "jsdom": "^15.1.1",
     "lorem-ipsum": "^2.0.3",
     "micro": "^9.3.4",
@@ -33,5 +34,8 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.1.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3"
   }
 }
