@@ -8,7 +8,7 @@ export default ({headline, source, domain, tags, position}) => (
       </div>
     </div>
     <div className="flex-grow">
-      <div className="w-full text-left inline-block transition-all duration-300 ease-in-out border shadow-lg rounded-lg">
+      <div className="w-full text-left inline-block bg-white border shadow-lg rounded-lg">
         <div className="pt-4 pl-4 pr-4 mb-2">
           <span className="uppercase text-gray-500 font-semibold"><NewsPaper/>{source}</span>
           <p className="text-xl font-light mt-2 mb-3">{headline}</p>
