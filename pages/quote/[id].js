@@ -37,7 +37,7 @@ export default (props) => {
             <span className="hidden sm:flex leading-none font-bold text-gray-400 text-5xl ml-2">&rdquo;</span>
           </h2>
           <div className="relative">
-            <div className="absolute flex border-l-4 border-gray-300 border-dotted" style={{
+            <div className="absolute flex border-l-4 border-gray-400 border-dotted" style={{
                 zIndex: '-1',
                 width: '10px',
                 top: -40,

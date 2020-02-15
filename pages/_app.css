@@ -2,10 +2,10 @@
 
 /* Begin custom styles */
 body {
-  @apply bg-gray-100;
+  @apply bg-white;
 }
 h1 {
-  @apply text-5xl;
+  @apply text-5xl font-thin;
 }
 h2 {
   @apply text-xl;
