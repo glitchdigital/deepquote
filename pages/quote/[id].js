@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import { LoremIpsum } from "lorem-ipsum"
 
 import { useFetch } from "components/hooks"
@@ -13,10 +12,8 @@ const lorem = new LoremIpsum({
   }
 })
 
-export default (props) => {
-  const router = useRouter()
-  const [quote, loading] = (router.query.id) ? useFetch(`/api/quote?id=${encodeURIComponent(router.query.id)}`) : [null, true]
-  //console.log(`/api/quote?id=${encodeURIComponent(router.query.id)}`)
+const Page = ({query}) => {
+  const [quote, loading] = useFetch(`/api/quote?id=${encodeURIComponent(query.id)}`)
 
   const citations = Array.from({length: Math.floor(Math.random() * 10) + 1 }).map(() => ({
     headline: lorem.generateSentences(1),
@@ -53,3 +50,12 @@ export default (props) => {
     </>
   )
 }
+
+
+Page.getInitialProps = ({query}) => {
+  //console.log(ctx)
+  //const { data } = useData();
+  return { query };
+}
+
+export default Page
