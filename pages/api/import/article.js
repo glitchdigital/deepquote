@@ -23,17 +23,12 @@ module.exports = async (req, res, callback) => {
   if (!url)
     return send(res, 400, { error: 'URL parameter missing' })
 
-  let { structuredData, text } = req.locals ? req.locals : await parseHtmlFromUrl(url)
+  let { metadata, structuredData, text: rawText, html } = req.locals ? req.locals : await parseHtmlFromUrl(url)
 
   // Add a full stop after the end of every line, if there is not one already
-  text = text.replace(/([^\.])\n/g, "$1.\n")
+  const text = rawText.replace(/([^\.])\n/g, "$1.\n")
 
   const quotes = getQuotes(text)
-  let quotesWithNumbers = []
-  quotes.forEach(quote => {
-    if (quote.match(/[0-9]/))
-      quotesWithNumbers.push(quote)
-  })
 
   // Get sentences in text
   const sentences = sbdTokenizer.sentences(text, { newline_boundaries: true, html_boundaries: true })
@@ -44,123 +39,21 @@ module.exports = async (req, res, callback) => {
   let keywords = []
   getKeywords(words.join(' ')).forEach(word => { 
     keywords.push({
-      name: word,
-      count: 0
+      text: word,
+      count: 0,
+      sentances: []
     })
-  })
-
-  // Build topic list
-  let topics = []
-  nlp(words).topics().out('freq').map(async(topic) => {
-    // Only include topics with more than one mention
-    if (topic.count > 1) {
-      let name = topic.normal
-
-      // Ignore strings like 'Ms Smith' or 'Mr Smith' as these
-      // tends to create false positives (and the full name of
-      // the person is typically referenced at least once too)
-      if (name.split(' ').length == 2 && name.match(/^(mr|ms|mrs|dr) /i))
-        return
-
-      const matches = words.join(' ').match(new RegExp(name.replace(/[^A-z0-9\-' ]/, ''), 'img'))
-      if (matches && matches[0]) {
-        name = matches[0]
-      }
-
-      topics.push({
-        name: name,
-        count: topic.count
-      })
-    }
   })
 
   if (structuredData.tags) {
     structuredData.tags.map(async tag => {
-      topics.push({
-        name: tag
+      keywords.push({
+        text: tag,
+        count: 0,
+        sentances: []
       })
     })
   }
-
-  let topicsWithDetail = []
-  await Promise.all(
-    topics.map(async topic => {
-      return await new Promise(async (resolve) => {
-        const relatedTopics = await getRelatedTopics(topic.name)
-
-        if (relatedTopics.default && relatedTopics.default.rankedList[0].rankedKeyword[0]) {
-          const googleTopic = relatedTopics.default.rankedList[0].rankedKeyword[0].topic
-          const wikipediaData = await getWikipediaEntities([googleTopic.title])
-
-          let name = googleTopic.title
-          let count = topic.count
-          let description = (wikipediaData[0]) ? wikipediaData[0].description : googleTopic.type
-          let topicUrl = (wikipediaData[0]) ? wikipediaData[0].url : null
-          
-          topicsWithDetail.push({
-            name,
-            description,
-            url: topicUrl,
-            count
-          })
-        } else {
-          const wikipediaData = await getWikipediaEntities([topic.name])
-
-          let name = topic.name
-          let count = topic.count
-          let description = (wikipediaData[0]) ? wikipediaData[0].description : null
-          let topicUrl = (wikipediaData[0]) ? wikipediaData[0].url : null
-
-          const matches = words.join(' ').match(new RegExp(name.replace(/[^A-z0-9\-' ]/, ''), 'img'))
-          if (matches && matches[0]) {
-            name = matches[0]
-          }
-
-          topicsWithDetail.push({
-            name,
-            description,
-            url: topicUrl,
-            count
-          })
-        }
-        return resolve()
-      })
-    })
-  )
-  topics = topicsWithDetail
-
-  // Deduplicate and filter topics
-  let filteredTopics = {}
-  topics.map(topic => {
-    // If no URL, push from topic into keyword
-    if (topic.url === null) {
-
-      let alreadyInKeywords = false
-      keywords.forEach((keyword, i) => {
-        if (keyword.name.toLowerCase() === topic.name.toLowerCase()) {
-          alreadyInKeywords = true
-
-          if (!keyword.count && topic.count)
-            keywords[i].count = topic.count
-
-          if (keyword.name === topic.name.toLowerCase())
-            keywords[i].name = topic.name
-        }
-      })
-
-      if (alreadyInKeywords !== true)
-        keywords.push(topic)
-        
-      return
-    }
-
-    if (!filteredTopics[topic.url]) {
-      filteredTopics[topic.url] = topic
-    } else {
-      filteredTopics[topic.url].count = topic.count
-    }
-  })
-  topics = Object.keys(filteredTopics).map(topic => { return filteredTopics[topic] })  
 
   sentences.forEach(sentence => {
     keywords.forEach(keyword => {
@@ -194,15 +87,8 @@ module.exports = async (req, res, callback) => {
     })
   })
 
-  // Sort topics by total count
-  topics.sort((a, b) => { return b.count - a.count })
   keywords.sort((a, b) => { return b.count - a.count })
 
-  let sentencesWithNumbers = []
-  sentences.forEach(sentence => {
-    if (sentence.match(/[0-9]/))
-      sentencesWithNumbers.push(sentence.replace(/\n/g, ' '))
-  })
 
   const articleHeadlineSentiment = SentimentIntensityAnalyzer.polarity_scores(structuredData.title)
   const articleTextSentiment = SentimentIntensityAnalyzer.polarity_scores(text)
@@ -211,6 +97,7 @@ module.exports = async (req, res, callback) => {
   let articleSentencesWithSentiment = []
   sentences.forEach(sentence => {
     articleSentencesWithSentiment.push({
+      text: sentence,
       length: sentence.replace(/\n/g, ' ').length,
       ...SentimentIntensityAnalyzer.polarity_scores(sentence.replace(/\n/g, ' '))
     })
@@ -228,18 +115,25 @@ module.exports = async (req, res, callback) => {
   if (structuredData.text) delete structuredData.text
 
   // Construct article to return
+  // @TODO Add language property to article
+  // @TODO Add title property to article
+  // @TODO Pass origional raw extracted text (i.e. not mangled!)
+  // @TODO Document this! Including examples and where the data comes from in each case.
   const article = {
     url,
     sentences: articleSentencesWithSentiment,
-    //sentencesWithNumbers,
     quotes,
-    //quotesWithNumbers,
     sentiment,
     wordCount,
-    structuredData,
     keywords,
-    topics,  
-    text: text.trim()
+    //topics,
+    html,
+    text: rawText.trim(),
+    // @TODO Strip these from Elasticsearch to prevent schema conflicts?
+    // Alternatively, can we indexed raw data in some other way that it
+    // won't matter?
+    metadata,
+    structuredData,
   }
 
   await importArticle(article)

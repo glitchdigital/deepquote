@@ -21,11 +21,8 @@ const Page = () => {
   )
 }
 
-
-// Page.getInitialProps = (ctx) => {
-//   const { data } = useData();
-//   return { data };
-// }
-
+Page.getInitialProps = ({query}) => {
+  return { query };
+}
 
 export default Page

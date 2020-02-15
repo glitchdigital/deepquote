@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.6.0",
+    "base58": "^2.0.1",
     "classname": "0.0.0",
     "compromise": "^13.1.0",
     "dotenv": "^8.2.0",
