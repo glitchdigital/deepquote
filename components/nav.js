@@ -7,11 +7,11 @@ const Nav = () => {
   const toggleMenuOpenState = () => setMenuOpenState(!menuOpenState)
 
   return (
-  <header className={classname("border-b sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3 mb-2", {'bg-white sm:bg-transparent shadow-xl sm:shadow-none': menuOpenState})}>
+  <header className={classname("border-b sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-4", {'bg-white sm:bg-transparent shadow-xl sm:shadow-none': menuOpenState})}>
     <div className="flex items-center justify-between px-4 py-3 sm:p-0">
-      <a href="/" className="no-underline hover:underline border-2 border-transparent font-normal text-gray-600 hover:text-gray-800">
-        <Home/>
-        <span className="inline sm:hidden lg:inline">Did They Really Say That?</span>
+      <a href="/" className="no-underline hover:underline border-2 border-transparent text-gray-600 hover:text-gray-800">
+        <span className="hidden sm:inline lg:hidden"><Home/></span>
+        <span className="inline sm:hidden lg:inline text-lg font-serif">Did They Really Say That?</span>
       </a>
       <div className="sm:hidden">
         <button onClick={toggleMenuOpenState} type="button" className="block rounded-full p-1 hover:bg-gray-100 active:bg-gray-100 active:shadow-lg text-gray-500 hover:text-gray-600 focus:text-gray-600 focus:outline-none">

@@ -10,11 +10,11 @@ const Page = () => {
     <>
       <Head title="Did They Really Say That?" />
       <Nav />
-      <div className="pt-5 pb-5">
-        <h1 className="text-center mb-2 mt-10">Did they really say that?</h1>
-        <p className="text-center text-lg text-gray-500 font-normal mb-10">description description description description</p>
+      <div className="pt-20 pb-20 text-center">
+        <h1 className="mb-2 mt-10 text-4xl md:text-6xl font-serif">Did they really say that?</h1>
+        <p className="text-lg md:text-2xl text-gray-600 font-normal mb-10">description description description description</p>
       </div>
-      <div className="mt-5 grid md:grid-cols-3 pl-2 pr-2 mb-2">
+      <div className="mt-5 grid lg:grid-cols-3 pl-2 pr-2 mb-2 bg-gray-100 border-t pt-2">
         {quotes.map((quote) => <Quote {...quote}/> )}
       </div>
     </>
