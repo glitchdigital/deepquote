@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "rebuild-index": "babel-node scripts/rebuild-index.js"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.6.0",
-    "base58": "^2.0.1",
+    "app-module-path": "^2.2.0",
     "classname": "0.0.0",
     "compromise": "^13.1.0",
     "dotenv": "^8.2.0",
@@ -37,6 +38,8 @@
     "fsevents": "^2.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3"
   }
 }
