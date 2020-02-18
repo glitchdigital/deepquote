@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 const useFetch = (url) => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
-  async function fetchUrl() {
+  const fetchUrl = async () => {
     const response = await fetch(`${window.location.protocol}${url}`)
     const json = await response.json()
     setData(json)
