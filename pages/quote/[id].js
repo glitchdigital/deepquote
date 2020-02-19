@@ -25,17 +25,17 @@ const Page = (props) => {
               <span className='flex m-auto text-gray-800'>{quote?.text}</span>
               <span className='hidden sm:flex leading-none font-bold text-gray-500 text-5xl ml-2'>&rdquo;</span>
             </h2>
-            <div className='absolute right-0 border-gray-400 text-sm rounded border shadow-sm' style={{bottom: '-40px'}}>
-              <a href={`/quote/${encodeURIComponent(quote.hash)}?fuzzy=false`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l px-2 py-1 hover:bg-white', { 'font-semibold bg-gray-200 hover:bg-gray-200 text-gray-700 shadow-inner': !fuzzy || fuzzy === 'false' })}>Exact matches</a>
-              <a href={`/quote/${encodeURIComponent(quote.hash)}?fuzzy=true`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r px-2 py-1 hover:bg-white', { 'font-semibold bg-gray-200 hover:bg-gray-200 text-gray-700 shadow-inner': fuzzy && fuzzy !== 'false' })}>Show all</a>
+            <div className='absolute right-0 text-sm rounded-full border shadow-sm' style={{bottom: '-40px'}}>
+              <a href={`/quote/${encodeURIComponent(quote.hash)}?fuzzy=false`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-3 py-1 hover:bg-white', { 'font-semibold bg-gray-200 hover:bg-gray-200 text-gray-700 shadow-inner': !fuzzy || fuzzy === 'false' })}>Exact matches</a>
+              <a href={`/quote/${encodeURIComponent(quote.hash)}?fuzzy=true`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r-full px-3 py-1 hover:bg-white', { 'font-semibold bg-gray-200 hover:bg-gray-200 text-gray-700 shadow-inner': fuzzy && fuzzy !== 'false' })}>Show all</a>
             </div>
           </div>
-          <div className='relative pt-2'>
+          <div className='relative pt-3'>
             <div className='absolute flex border-l-4 z-10' style={{
                 width: '10px',
                 top: -40,
                 bottom: 0,
-                left: 48,
+                left: 49,
               }}/>
             <div className='absolute w-full bg-gray-100 z-20' style={{
                 bottom: 0,

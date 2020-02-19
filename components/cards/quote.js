@@ -8,9 +8,9 @@ export default ({text, hash, source}) => (
         <span className='flex ml-2 mr-2'>{text}</span>
         <span className='hidden sm:flex leading-none font-bold text-gray-500 text-3xl'>&rdquo;</span>
       </h3>
-    </a>
-    <a href={`/quote/${encodeURIComponent(hash)}`} className='absolute bottom-0 no-underline text-gray-600 text-right p-2 mb-10 text-sm w-full'>
-      <NewsPaper/>{source?.publisher || new URL(source?.url).hostname.replace(/^www\./, '')}
+      <span className='absolute bottom-0 text-gray-600 text-right p-2 mb-10 text-sm w-full'>
+        <NewsPaper/>{source?.publisher || new URL(source?.url).hostname.replace(/^www\./, '')}
+      </span>
     </a>
     <p className='py-2 px-1 bg-gray-100 text-gray-600 rounded-b-lg absolute bottom-0 w-full'>
       <Calendar className='ml-2'/>{new Date(source?.datePublished).toLocaleDateString()}
