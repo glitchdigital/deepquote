@@ -1,5 +1,5 @@
 const { send, queryParser } = require('lib/request-handler')
-const mongo = require('lib/db/mongodb')
+const mongo = require('lib/db/mongo')
 const elasticsearch = require('lib/db/elasticsearch')
 
 
