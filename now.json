@@ -1,6 +1,7 @@
 {
   "env": {
     "ELASTICSEARCH_URI": "@dtrst_elasticsearch_uri",
-    "MONGO_URI": "@dtrst_mongo_uri"
+    "MONGO_URI": "@dtrst_mongo_uri",
+    "API_HOSTNAME": "@dtrst_api_hostname"
   }
 }

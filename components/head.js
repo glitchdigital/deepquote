@@ -1,6 +1,6 @@
 import NextHead from 'next/head'
 
-const defaultDescription = ''
+const defaultDescription = 'Did they really say that?'
 const defaultOGURL = ''
 const defaultOGImage = ''
 

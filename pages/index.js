@@ -1,11 +1,16 @@
 import Head from 'components/head'
 import Nav from 'components/nav'
-import Quote from 'components/quote';
-import { useFetch } from 'components/fetch-hook';
+import QuoteCard from 'components/cards/quote'
+import { useFetch, useFetchSync } from 'components/fetch-hook'
 
-const Page = () => {
-  const [quotes, loading] = useFetch('/api/quotes')
+const QUOTES_API_ENDPOINT = '/api/quotes'
+
+const Page = (props) => {
+  let [ data, loading ] = useFetch(QUOTES_API_ENDPOINT)
   
+  // Use server side render provided data while client is fetching latest version
+  const quotes = loading ? props.data : data
+
   return (
     <>
       <Head title="Did They Really Say That?" />
@@ -15,14 +20,22 @@ const Page = () => {
         <p className="text-lg md:text-2xl text-gray-600 font-normal mb-10">description description description description</p>
       </div>
       <div className="mt-5 grid lg:grid-cols-3 pl-2 pr-2 mb-2 bg-gray-100 border-t pt-2" style={{minHeight: '500px'}}>
-        {quotes.map((quote) => <Quote {...quote}/> )}
+        {quotes.map((quote) => <QuoteCard key={quote.hash} {...quote}/> )}
       </div>
     </>
   )
 }
 
-Page.getInitialProps = ({query}) => {
-  return { query };
+Page.getInitialProps = async ({query, res}) => {
+  const data = await useFetchSync(QUOTES_API_ENDPOINT)
+
+  res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
+
+  return {
+    ...query,
+    data,
+    loading: true
+  }
 }
 
 export default Page
