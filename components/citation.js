@@ -1,4 +1,4 @@
-import { Calendar, Link, Tag, NewsPaper, Checkmark } from 'react-zondicons'
+import { Calendar, Link, Tag, NewsPaper } from 'react-zondicons'
 import classname from 'classname'
 
 const MAX_TAGS = 5
@@ -12,7 +12,9 @@ export default ({url, name, publisher, datePublished, exactMatch, keywords, posi
     </div>
     <div className='flex-grow'>
       <div className={classname('w-full text-left inline-block bg-white rounded-lg border-2', { 'bg-white shadow-xl border-2 border-gray-400': exactMatch })}>
-        <p className='pt-3 px-4 -block uppercase text-gray-500 font-semibold'><NewsPaper/>{publisher || new URL(url).hostname.replace(/^www\./, '')}</p>
+        <p className='pt-3 px-4 -block uppercase text-gray-500 font-semibold'>
+          <NewsPaper/>{publisher || new URL(url).hostname.replace(/^www\./, '')}
+        </p>
         <a href={url} target='_blank' className='text-gray-800 hover:text-blue-500 no-underline hover:underline block px-4 mb-2'>
           <span className='text-lg block text-md font-semibold mt-2 mb-3'>{name}</span>
         </a>
@@ -26,7 +28,9 @@ export default ({url, name, publisher, datePublished, exactMatch, keywords, posi
         }
         <p className='px-4 pt-2 pb-2 bg-gray-100 text-gray-600 rounded-b-lg'>
           <Calendar className='ml-2'/>{new Date(datePublished).toLocaleDateString()}
-          <a className='float-right no-underline hover:underline' href={url} target='_blank'><Link/>{new URL(url).hostname.replace(/^www\./, '')}</a>
+          <a className='float-right no-underline hover:underline' href={url} target='_blank'>
+            <Link/>{new URL(url).hostname.replace(/^www\./, '')}
+          </a>
         </p>
       </div>
     </div>
