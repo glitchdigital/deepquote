@@ -1,9 +1,6 @@
 {
   "env": {
-    "ELASTICSEARCH_CONNECTION_STRING": "@elasticsearch_connection_string",
-    "ELASTICSEARCH_INDEX_NAME": "@elasticsearch_index_name",
-    "MONGO_DB_CONNECTION_STRING": "@mongo_db_connection_string",
-    "MONGO_DB_NAME": "@mongo_db_name",
-    "MONGO_DB_COLLECTION": "@mongo_db_collection"
+    "ELASTICSEARCH_URI": "@dtrst_elasticsearch_uri",
+    "MONGO_URI": "@dtrst_mongo_uri"
   }
 }
