@@ -10,7 +10,7 @@ const Page = ({query}) => {
 
   return (
     <>
-      <Head title={`"${quote.text}"`} />
+      <Head title={loading ? "Loading…" : `"${quote?.text}"`} />
       <Nav />
       {!loading &&
         <div className="bg-gray-100 pt-5 md:pt-10 pb-5 border-b">
