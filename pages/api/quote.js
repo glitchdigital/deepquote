@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
   })
 
   const quote = findQuoteByIdResult.body.hits.hits[0]._source
-  quote.citations = [ quote.source ]
+  quote.citations = [ { ...quote.source, exactMatch: true } ]
 
   // First, find other exact matches for the quote
   const findOtherInstancesOfQuoteResult = await client.search({
@@ -26,9 +26,8 @@ module.exports = async (req, res) => {
 
   findOtherInstancesOfQuoteResult.body.hits.hits.forEach((result,i) => {
     const newCitation = result._source.source
-    newCitation.exactMatch = true // Indicate this is an exact match
     if (!quote.citations.some(citation => citation.url == newCitation.url)) {
-      quote.citations.push(newCitation)
+      quote.citations.push({ ...newCitation, exactMatch: true })
     }
   })
 
@@ -43,9 +42,8 @@ module.exports = async (req, res) => {
 
     findOtherSimilarQuotesResult.body.hits.hits.forEach((result,i) => {
       const newCitation = result._source.source
-      newCitation.exactMatch = false // Indicate this is not an exact match
       if (!quote.citations.some(citation => citation.url == newCitation.url)) {
-        quote.citations.push(newCitation)
+        quote.citations.push({ ...newCitation, exactMatch: false })
       }
     })
   }
