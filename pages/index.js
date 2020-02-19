@@ -1,11 +1,12 @@
 import Head from 'components/head'
 import Nav from 'components/nav'
 import QuoteCard from 'components/cards/quote'
-import { useFetch, useFetchSync } from 'components/fetch-hook'
+import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
 
 const QUOTES_API_ENDPOINT = '/api/quotes'
 
 const Page = (props) => {
+  const { url } = props
   let [ data, loading ] = useFetch(QUOTES_API_ENDPOINT)
   
   // Use server side render provided data while client is fetching latest version
@@ -13,7 +14,7 @@ const Page = (props) => {
 
   return (
     <>
-      <Head title='Did They Really Say That?' />
+      <Head title='Did They Really Say That?' url={url}/>
       <Nav />
       <div className='pt-20 pb-20 text-center'>
         <h1 className='mb-2 mt-10 text-4xl md:text-6xl font-serif'>Did they really say that?</h1>
@@ -34,6 +35,7 @@ Page.getInitialProps = async ({query, res}) => {
   return {
     ...query,
     data,
+    url: getHostname(),
     loading: true
   }
 }

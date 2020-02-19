@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react'
 
 // Synchronous fetch method, useful for Server Side Rendering
 const useFetchSync = async (url) => {
-  const hostname = (typeof window !== 'undefined') ? window.location.protocol : process.env.API_HOSTNAME || 'http://localhost:3000'
+  const hostname = getHostname()
   const response = await fetch(`${hostname}${url}`)  
   const json = await response.json()
   return json
 }
+
+const getHostname = () => (typeof window !== 'undefined') ? window.location.protocol : process.env.API_HOSTNAME || 'http://localhost:3000'
 
 // Hook for making calls to fetch
 const useFetch = (url) => {
@@ -27,5 +29,6 @@ const useFetch = (url) => {
 
 export { 
   useFetch,
-  useFetchSync
+  useFetchSync,
+  getHostname
  }

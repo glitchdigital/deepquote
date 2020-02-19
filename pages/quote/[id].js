@@ -1,5 +1,5 @@
 import classname from 'classname'
-import { useFetch, useFetchSync } from 'components/fetch-hook';
+import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook';
 import Head from '../../components/head'
 import Nav from '../../components/nav'
 import Citation from '../../components/citation'
@@ -7,7 +7,7 @@ import Citation from '../../components/citation'
 const QUOTE_API_ENDPOINT = ({id, fuzzy}) => `/api/quote?id=${encodeURIComponent(id)}&fuzzy=${encodeURIComponent(fuzzy)}`
 
 const Page = (props) => {
-  const { id = null, fuzzy = false } = props.query
+  const { id = null, fuzzy = false, url } = props.query
   const [data, loading] = useFetch(QUOTE_API_ENDPOINT({id, fuzzy}))
 
   // Use server side render provided data while client is fetching latest version
@@ -15,7 +15,7 @@ const Page = (props) => {
 
   return (
     <>
-      <Head title={loading ? 'Loading…' : `'${quote?.text}'`} />
+      <Head title={`"${quote.text}"`} url={url}/>
       <Nav />
       <div className='bg-gray-100 pt-5 md:pt-10 pb-5 border-b'>
         <div className='relative m-auto pl-4 pr-4 md:p-0' style={{maxWidth: 800}}>
@@ -60,6 +60,7 @@ Page.getInitialProps = async ({query, res}) => {
   return {
     query,
     data,
+    url: `${getHostname()}/quote/${id}`,
     loading: true
   }
 }
