@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 // Synchronous fetch method, useful for Server Side Rendering
 const useFetchSync = async (url) => {
   const hostname = (typeof window !== 'undefined') ? window.location.protocol : process.env.API_HOSTNAME || 'http://localhost:3000'
-  console.log("HOSTNAME MO", hostname)
   const response = await fetch(`${hostname}${url}`)  
   const json = await response.json()
   return json
