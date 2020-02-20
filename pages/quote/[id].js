@@ -42,7 +42,7 @@ const Page = (props) => {
                 height: 140,
               }}/>
             {quote.citations.map((citation, i) =>
-              <Citation {...citation} position={i+1}/>
+              <Citation key={citation.url} {...citation} position={i+1}/>
             )}
           </div>
         </div>

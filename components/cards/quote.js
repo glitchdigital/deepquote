@@ -13,7 +13,7 @@ export default ({text, hash, source}) => (
       </h3>
     </a>
     <p className='px-4 py-3 bg-gray-100 text-gray-600 rounded-b-lg absolute bottom-0 w-full'>
-      <Calendar/>{new Date(source?.datePublished).toLocaleDateString()}
+      <Calendar/>{new Date(source?.datePublished).toISOString().substring(0, 10)}
     </p>
   </div>
 )

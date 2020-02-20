@@ -22,12 +22,12 @@ export default ({url, name, publisher, datePublished, exactMatch, keywords, posi
           <p className='px-4 mb-1 text-gray-600'>
             <Tag/>
             {keywords.slice(0, MAX_TAGS).map((keyword,i) => 
-              <span className='inline-block mr-2 mb-2 px-3 py-1 rounded-full bg-gray-200 text-sm'>{keyword}</span>
+              <span key={`keyword:"${keyword}"`} className='inline-block mr-2 mb-2 px-3 py-1 rounded-full bg-gray-200 text-sm'>{keyword}</span>
             )}
           </p>
         }
         <p className='px-4 py-3 bg-gray-100 text-gray-600 rounded-b-lg'>
-          <Calendar/>{new Date(datePublished).toLocaleDateString()}
+          <Calendar/>{new Date(datePublished).toISOString().substring(0, 10)}
           <a className='float-right no-underline hover:underline' href={url} target='_blank' rel="noopener">
             <Link/>{new URL(url).hostname.replace(/^www\./, '')}
           </a>
