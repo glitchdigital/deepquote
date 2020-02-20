@@ -15,7 +15,7 @@ export default ({url, name, publisher, datePublished, exactMatch, keywords, posi
         <p className='pt-3 px-4 -block uppercase text-gray-500 font-semibold'>
           <NewsPaper/>{publisher || new URL(url).hostname.replace(/^www\./, '')}
         </p>
-        <a href={url} target='_blank' className='text-gray-800 hover:text-blue-500 no-underline hover:underline block px-4 mb-2'>
+        <a href={url} target='_blank' rel='noopener' className='text-gray-800 hover:text-blue-500 no-underline hover:underline block px-4 mb-2'>
           <span className='text-lg block text-md font-semibold mt-2 mb-3'>{name}</span>
         </a>
         {keywords &&
@@ -28,7 +28,7 @@ export default ({url, name, publisher, datePublished, exactMatch, keywords, posi
         }
         <p className='px-4 py-3 bg-gray-100 text-gray-600 rounded-b-lg'>
           <Calendar/>{new Date(datePublished).toISOString().substring(0, 10)}
-          <a className='float-right no-underline hover:underline' href={url} target='_blank' rel="noopener">
+          <a className='float-right no-underline hover:underline' href={url} target='_blank' rel='noopener'>
             <Link/>{new URL(url).hostname.replace(/^www\./, '')}
           </a>
         </p>
