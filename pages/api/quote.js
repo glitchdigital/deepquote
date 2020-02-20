@@ -16,30 +16,42 @@ module.exports = async (req, res) => {
   const quote = findQuoteByIdResult.body.hits.hits[0]._source
   quote.citations = [ { ...quote.source, suggestedResult: false } ]
 
-  // Find other exact matches for the quote
-  const instancesOfQuoteResult = await client.search({
-    index: ELASTICSEARCH_QUOTE_INDEX,
-    body: { query: { match_phrase: { text: quote.text } } },
-    from: 0,
-    size: 100
-  })
+  const [instancesOfQuoteResult, similarQuotesResult] = await Promise.all([
+    // Find other exact matches for the quote
+    await client.search({
+      index: ELASTICSEARCH_QUOTE_INDEX,
+      body: { query: { match_phrase: { text: quote.text } } },
+      from: 0,
+      size: 100
+    }),
+    // Find other (non-exact) possible matches for the quote
+    await client.search({
+      index: ELASTICSEARCH_QUOTE_INDEX,
+      body: { 
+        query: { 
+          match: { text: quote.text },
+          // more_like_this : {
+          //   fields: ['text'],
+          //   like: quote.text,
+          //   min_term_freq : 2,
+          //   max_query_terms : 12
+          // }
+        }
+      },
+      from: 0,
+      size: 100
+    })
+  ])
 
   instancesOfQuoteResult.body.hits.hits.forEach((result,i) => {
     const newCitation = result._source.source
     if (!quote.citations.some(citation => citation.url == newCitation.url)) {
-    
       quote.citations.push({ ...newCitation, suggestedResult: false })
     }
   })
 
-  // Find other non-exact potential matches for the quote
-  const similarQuotesResult = await client.search({
-    index: ELASTICSEARCH_QUOTE_INDEX,
-    body: { query: { match: { text: quote.text } } },
-    from: 0,
-    size: 100
-  })
 
+  
   similarQuotesResult.body.hits.hits.forEach((result,i) => {
     const newCitation = result._source.source
     if (!quote.citations.some(citation => citation.url == newCitation.url)) {
