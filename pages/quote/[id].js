@@ -55,7 +55,7 @@ Page.getInitialProps = async ({query, res}) => {
   const { id, fuzzy } = query
   const data = await useFetchSync(QUOTE_API_ENDPOINT({id, fuzzy}))
 
-  res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
+  if (res) res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
 
   return {
     query,

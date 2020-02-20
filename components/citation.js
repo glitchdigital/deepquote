@@ -4,7 +4,7 @@ import classname from 'classname'
 const MAX_TAGS = 5
 
 export default ({url, name, publisher, datePublished, exactMatch, keywords, position}) => (
-  <div className='flex mb-5 sm:mb-10 z-20 relative'>
+  <div className='flex mb-5 sm:mb-6 z-20 relative'>
     <div style={{width: 100}} className='flex-none hidden sm:block'>
       <div style={{height: 50, width: 50}} className={classname('mt-5 m-auto border-4 rounded-full text-center pt-2 text-lg font-semibold', exactMatch ? 'bg-white border-gray-400 shadow-lg text-gray-600' : 'border-gray-300 bg-gray-100 text-gray-500')}>
         {position}
