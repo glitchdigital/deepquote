@@ -5,7 +5,7 @@ const { send, queryParser } = require('lib/request-handler')
 const { ELASTICSEARCH_URI, ELASTICSEARCH_QUOTE_INDEX } = require('lib/db/elasticsearch')
 
 module.exports = async (req, res) => {
-  const { id, showAll } = queryParser(req)
+  const { id } = queryParser(req)
 
   const client = new Client({ node: ELASTICSEARCH_URI })
   const findQuoteByIdResult = await client.search({
@@ -14,39 +14,39 @@ module.exports = async (req, res) => {
   })
 
   const quote = findQuoteByIdResult.body.hits.hits[0]._source
-  quote.citations = [ { ...quote.source, exactMatch: true } ]
+  quote.citations = [ { ...quote.source, suggestedResult: false } ]
 
-  // First, find other exact matches for the quote
-  const findOtherInstancesOfQuoteResult = await client.search({
+  // Find other exact matches for the quote
+  const instancesOfQuoteResult = await client.search({
     index: ELASTICSEARCH_QUOTE_INDEX,
     body: { query: { match_phrase: { text: quote.text } } },
     from: 0,
     size: 100
   })
 
-  findOtherInstancesOfQuoteResult.body.hits.hits.forEach((result,i) => {
+  instancesOfQuoteResult.body.hits.hits.forEach((result,i) => {
     const newCitation = result._source.source
     if (!quote.citations.some(citation => citation.url == newCitation.url)) {
-      quote.citations.push({ ...newCitation, exactMatch: true })
+    
+      quote.citations.push({ ...newCitation, suggestedResult: false })
     }
   })
 
-  if (showAll && showAll === 'true') {
-    //Find other non-exact potential matches for the quote
-    const findOtherSimilarQuotesResult = await client.search({
-      index: ELASTICSEARCH_QUOTE_INDEX,
-      body: { query: { match: { text: quote.text } } },
-      from: 0,
-      size: 100
-    })
+  // Find other non-exact potential matches for the quote
+  const similarQuotesResult = await client.search({
+    index: ELASTICSEARCH_QUOTE_INDEX,
+    body: { query: { match: { text: quote.text } } },
+    from: 0,
+    size: 100
+  })
 
-    findOtherSimilarQuotesResult.body.hits.hits.forEach((result,i) => {
-      const newCitation = result._source.source
-      if (!quote.citations.some(citation => citation.url == newCitation.url)) {
-        quote.citations.push({ ...newCitation, exactMatch: false })
-      }
-    })
-  }
+  similarQuotesResult.body.hits.hits.forEach((result,i) => {
+    const newCitation = result._source.source
+    if (!quote.citations.some(citation => citation.url == newCitation.url)) {
+      // Set 'suggestedResult' to true for these matches
+      quote.citations.push({ ...newCitation, suggestedResult: true })
+    }
+  })
 
   // Sort results by date of publication (oldest first)
   quote.citations.sort((a, b) => { return a.datePublished - b.datePublished })

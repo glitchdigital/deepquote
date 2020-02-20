@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import Link from 'next/link'
 import classname from 'classname'
 import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
 import Head from 'components/head'
@@ -5,11 +7,12 @@ import Nav from 'components/nav'
 import Quote from 'components/timeline/quote'
 import Citation from 'components/timeline/citation'
 
-const QUOTE_API_ENDPOINT = ({id, fuzzy}) => `/api/quote?id=${encodeURIComponent(id)}&fuzzy=${encodeURIComponent(fuzzy)}`
+const QUOTE_API_ENDPOINT = (id) => `/api/quote?id=${encodeURIComponent(id)}`
 
 const Page = (props) => {
-  const { id = null, showAll = false, url } = props.query
-  const [data, loading] = useFetch(QUOTE_API_ENDPOINT({id, showAll}))
+  const { id = null, showAll: showAllQueryParam, url } = props.query
+  const showAll = (showAllQueryParam === 'true')
+  const [data, loading] = useFetch(QUOTE_API_ENDPOINT(id))
 
   // Use server side render provided data while client is fetching latest version
   const quote = loading ? props.data : data
@@ -23,8 +26,16 @@ const Page = (props) => {
           <div className='relative rounded-lg bg-gray-300 z-30'>
             <Quote {...quote}/>
             <div className='absolute right-0 text-sm rounded-full border shadow-sm' style={{bottom: '-50px'}}>
-              <a href={`/quote/${encodeURIComponent(quote.hash)}?showAll=false`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-4 py-2 hover:bg-white', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': !showAll || showAll === 'false' })}>Exact matches</a>
-              <a href={`/quote/${encodeURIComponent(quote.hash)}?showAll=true`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r-full px-4 py-2 hover:bg-white', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': showAll && showAll !== 'false' })}>Show all</a>
+              <Link href={`/quote/[id]`} as={`/quote/${quote.hash}`}>
+                <a className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-4 py-2 hover:bg-white', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': !showAll })}>
+                  Exact matches
+                </a>
+              </Link>
+              <Link href={`/quote/[id]?showAll=true`} as={`/quote/${quote.hash}?showAll=true`}>
+                <a className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r-full px-4 py-2 hover:bg-white', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': showAll })}>
+                  Possible matches
+                </a>
+              </Link>
             </div>
           </div>
           <div className='relative pt-6'>
@@ -38,7 +49,7 @@ const Page = (props) => {
                 bottom: 0,
                 height: 140,
               }}/>
-            {quote.citations.map((citation, i) =>
+            {quote.citations.filter((citation) => (showAll || !citation.suggestedResult)).map((citation, i) =>
               <Citation key={citation.url} {...citation} position={i+1}/>
             )}
           </div>
@@ -47,10 +58,9 @@ const Page = (props) => {
     </>
   )
 }
-
 Page.getInitialProps = async ({query, res}) => {
-  const { id, showAll } = query
-  const data = await useFetchSync(QUOTE_API_ENDPOINT({id, showAll}))
+  const { id } = query
+  const data = await useFetchSync(QUOTE_API_ENDPOINT(id))
 
   if (res) res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
 
