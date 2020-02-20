@@ -28,7 +28,7 @@ export default ({url, name, publisher, datePublished, exactMatch, keywords, posi
         }
         <p className='px-4 py-3 bg-gray-100 text-gray-600 rounded-b-lg'>
           <Calendar/>{new Date(datePublished).toLocaleDateString()}
-          <a className='float-right no-underline hover:underline' href={url} target='_blank'>
+          <a className='float-right no-underline hover:underline' href={url} target='_blank' rel="noopener">
             <Link/>{new URL(url).hostname.replace(/^www\./, '')}
           </a>
         </p>
