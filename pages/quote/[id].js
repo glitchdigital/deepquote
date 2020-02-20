@@ -1,3 +1,4 @@
+import classname from 'classname'
 import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
 import Head from 'components/head'
 import Nav from 'components/nav'
@@ -19,7 +20,13 @@ const Page = (props) => {
       <Nav />
       <div className='bg-gray-100 pt-5 md:pt-10 pb-5 border-b'>
         <div className='relative m-auto pl-4 pr-4 md:p-0' style={{maxWidth: 800}}>
-          <Quote {...quote} showAll={showAll}/>
+          <div className='relative rounded-lg bg-gray-300 z-30'>
+            <Quote {...quote}/>
+            <div className='absolute right-0 text-sm rounded-full border shadow-sm' style={{bottom: '-50px'}}>
+              <a href={`/quote/${encodeURIComponent(quote.hash)}?showAll=false`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-4 py-2 hover:bg-white', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': !showAll || showAll === 'false' })}>Exact matches</a>
+              <a href={`/quote/${encodeURIComponent(quote.hash)}?showAll=true`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r-full px-4 py-2 hover:bg-white', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': showAll && showAll !== 'false' })}>Show all</a>
+            </div>
+          </div>
           <div className='relative pt-6'>
             <div className='absolute flex border-l-4 z-10' style={{
                 width: '10px',
