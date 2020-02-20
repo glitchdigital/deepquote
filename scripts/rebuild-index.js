@@ -50,7 +50,7 @@ const FORCE_RECRAWL = false
         }
 
         // An example of how to update an a field on an item in place (without updating the entire item)
-        // collection.updateOne({ _id: doc._id }, { $set: { "lastUpdated": new Date() } });
+        // collection.updateOne({ _id: doc._id }, { $set: { "lastUpdated": new Date() } })
         
         let article = {}
         if (FORCE_RECRAWL === true || !doc.html) {

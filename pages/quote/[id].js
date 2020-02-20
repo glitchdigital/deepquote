@@ -1,5 +1,5 @@
 import classname from 'classname'
-import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook';
+import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
 import Head from '../../components/head'
 import Nav from '../../components/nav'
 import Citation from '../../components/citation'

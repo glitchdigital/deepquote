@@ -3,7 +3,7 @@ const { fetchArticle, parseArticle } = require('lib/article')
 const { addArticle, addQuotesFromArticle } = require('lib/db')
 
 module.exports = async (req, res, callback) => {
-  res.callbackWaitsForEmptyEventLoop = false;
+  res.callbackWaitsForEmptyEventLoop = false
 
   const { url } = queryParser(req)
 
