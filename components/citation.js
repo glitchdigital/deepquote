@@ -4,7 +4,7 @@ import classname from 'classname'
 const MAX_TAGS = 5
 
 export default ({url, name, publisher, datePublished, exactMatch, keywords, position}) => (
-  <div className='flex mb-5 sm:mb-6 z-20 relative'>
+  <div className='flex mb-6 sm:mb-8 z-20 relative'>
     <div style={{width: 100}} className='flex-none hidden sm:block'>
       <div style={{height: 50, width: 50}} className={classname('mt-5 m-auto border-4 rounded-full text-center pt-2 text-lg font-semibold', exactMatch ? 'bg-white border-gray-400 shadow-lg text-gray-600' : 'border-gray-300 bg-gray-100 text-gray-500')}>
         {position}
@@ -19,15 +19,15 @@ export default ({url, name, publisher, datePublished, exactMatch, keywords, posi
           <span className='text-lg block text-md font-semibold mt-2 mb-3'>{name}</span>
         </a>
         {keywords &&
-          <p className='px-4 mb-3 text-gray-600'>
+          <p className='px-4 mb-1 text-gray-600'>
             <Tag/>
             {keywords.slice(0, MAX_TAGS).map((keyword,i) => 
-              <span className='inline-block mr-2 mb-1 px-2 py-1 rounded-full bg-gray-200 text-sm'>{keyword}</span>
+              <span className='inline-block mr-2 mb-2 px-3 py-1 rounded-full bg-gray-200 text-sm'>{keyword}</span>
             )}
           </p>
         }
-        <p className='px-4 pt-2 pb-2 bg-gray-100 text-gray-600 rounded-b-lg'>
-          <Calendar className='ml-2'/>{new Date(datePublished).toLocaleDateString()}
+        <p className='px-4 py-3 bg-gray-100 text-gray-600 rounded-b-lg'>
+          <Calendar/>{new Date(datePublished).toLocaleDateString()}
           <a className='float-right no-underline hover:underline' href={url} target='_blank'>
             <Link/>{new URL(url).hostname.replace(/^www\./, '')}
           </a>
