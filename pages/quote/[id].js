@@ -1,14 +1,14 @@
-import classname from 'classname'
 import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
-import Head from '../../components/head'
-import Nav from '../../components/nav'
-import Citation from '../../components/citation'
+import Head from 'components/head'
+import Nav from 'components/nav'
+import Quote from 'components/timeline/quote'
+import Citation from 'components/timeline/citation'
 
 const QUOTE_API_ENDPOINT = ({id, fuzzy}) => `/api/quote?id=${encodeURIComponent(id)}&fuzzy=${encodeURIComponent(fuzzy)}`
 
 const Page = (props) => {
-  const { id = null, fuzzy = false, url } = props.query
-  const [data, loading] = useFetch(QUOTE_API_ENDPOINT({id, fuzzy}))
+  const { id = null, showAll = false, url } = props.query
+  const [data, loading] = useFetch(QUOTE_API_ENDPOINT({id, showAll}))
 
   // Use server side render provided data while client is fetching latest version
   const quote = loading ? props.data : data
@@ -19,17 +19,7 @@ const Page = (props) => {
       <Nav />
       <div className='bg-gray-100 pt-5 md:pt-10 pb-5 border-b'>
         <div className='relative m-auto pl-4 pr-4 md:p-0' style={{maxWidth: 800}}>
-          <div className='relative rounded-lg bg-gray-300 z-30'>
-            <h2 className='flex font-serif text-justify mb-10 text-2xl flex px-4 py-6'>
-              <span className='hidden sm:flex leading-none font-bold text-gray-500 text-5xl mr-2'>&ldquo;</span>
-              <span className='flex m-auto text-gray-800'>{quote?.text}</span>
-              <span className='hidden sm:flex leading-none font-bold text-gray-500 text-5xl ml-2'>&rdquo;</span>
-            </h2>
-            <div className='absolute right-0 text-sm rounded-full border shadow-sm' style={{bottom: '-50px'}}>
-              <a href={`/quote/${encodeURIComponent(quote.hash)}?fuzzy=false`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-4 py-2 hover:bg-white', { 'font-semibold bg-gray-200 hover:bg-gray-200 text-gray-700 shadow-inner': !fuzzy || fuzzy === 'false' })}>Exact matches</a>
-              <a href={`/quote/${encodeURIComponent(quote.hash)}?fuzzy=true`} className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r-full px-4 py-2 hover:bg-white', { 'font-semibold bg-gray-200 hover:bg-gray-200 text-gray-700 shadow-inner': fuzzy && fuzzy !== 'false' })}>Show all</a>
-            </div>
-          </div>
+          <Quote {...quote} showAll={showAll}/>
           <div className='relative pt-6'>
             <div className='absolute flex border-l-4 z-10' style={{
                 width: '10px',
@@ -52,8 +42,8 @@ const Page = (props) => {
 }
 
 Page.getInitialProps = async ({query, res}) => {
-  const { id, fuzzy } = query
-  const data = await useFetchSync(QUOTE_API_ENDPOINT({id, fuzzy}))
+  const { id, showAll } = query
+  const data = await useFetchSync(QUOTE_API_ENDPOINT({id, showAll}))
 
   if (res) res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
 

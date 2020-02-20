@@ -5,7 +5,7 @@ const { send, queryParser } = require('lib/request-handler')
 const { ELASTICSEARCH_URI, ELASTICSEARCH_QUOTE_INDEX } = require('lib/db/elasticsearch')
 
 module.exports = async (req, res) => {
-  const { id, fuzzy } = queryParser(req)
+  const { id, showAll } = queryParser(req)
 
   const client = new Client({ node: ELASTICSEARCH_URI })
   const findQuoteByIdResult = await client.search({
@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
     }
   })
 
-  if (fuzzy && fuzzy === 'true') {
+  if (showAll && showAll === 'true') {
     //Find other non-exact potential matches for the quote
     const findOtherSimilarQuotesResult = await client.search({
       index: ELASTICSEARCH_QUOTE_INDEX,
