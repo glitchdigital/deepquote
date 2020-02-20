@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Link from 'next/link'
 import classname from 'classname'
 import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
