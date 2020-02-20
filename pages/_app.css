@@ -23,7 +23,7 @@ header > nav > a {
     @apply underline text-blue-500;
   }
 }
-svg.-zondicon {
+.-zondicon {
   @apply relative leading-none fill-current inline mr-2 font-normal;
   height: 1.2rem;
   width: 1.2rem;
