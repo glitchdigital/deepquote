@@ -9,7 +9,7 @@ const Nav = () => {
   return (
   <header className={classname('border-b sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-4', {'bg-white sm:bg-transparent shadow-xl sm:shadow-none': menuOpenState})}>
     <div className='flex items-center justify-between px-4 py-3 sm:p-0'>
-      <a href='/' className='no-underline hover:underline border-2 border-transparent text-gray-600 hover:text-gray-800'>
+      <a href='/' className='no-underline hover:underline border-2 border-transparent text-gray-800 hover:text-blue-500'>
         <span className='hidden sm:inline lg:hidden'><Home/></span>
         <span className='inline sm:hidden lg:inline text-lg font-serif'>Did They Really Say That?</span>
       </a>
