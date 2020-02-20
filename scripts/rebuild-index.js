@@ -13,7 +13,7 @@
 // 'node-babel' so any babel plugins they need get invoked too.
 require('app-module-path').addPath(`${__dirname}/..`)
 
-const { MONGO_ARTICLE_COLLECTION, connect, count: mongoCount } = require('lib/db/mongo')
+const { MONGO_ARTICLE_COLLECTION, MONGO_QUOTE_COLLECTION, connect, count: mongoCount } = require('lib/db/mongo')
 const { count: elasticsearchCount } = require('lib/db/elasticsearch')
 const { addArticle, addQuotesFromArticle } = require('lib/db')
 const { fetchArticle, parseArticle } = require('lib/article')
@@ -28,12 +28,14 @@ const FORCE_RECRAWL = false
     console.log(new Date())
 
     const db = await connect()
-    const collection = db.collection(MONGO_ARTICLE_COLLECTION)
-    const cursor = collection.find().addCursorFlag('noCursorTimeout', true) // noCursorTimeout required for long running scripts
+
+    await ensureIndexes(db)
 
     console.log("MongoDB:", await mongoCount())
     console.log("Elasticsearch:", await elasticsearchCount(), "\n")
 
+    const cursor = db.collection(MONGO_ARTICLE_COLLECTION).find().addCursorFlag('noCursorTimeout', true) // noCursorTimeout required for long running scripts
+    
     // @TODO Note: Could be faster if used bulkwrites (but may be slighly less easy follow)
     // https://stackoverflow.com/questions/25507866/how-can-i-use-a-cursor-foreach-in-mongodb-using-node-js
     while (cursor.hasNext()) {
@@ -96,3 +98,25 @@ const FORCE_RECRAWL = false
     process.exit()
   }
 })()
+
+function ensureIndexes(mongodb, elasticsearch) {
+  return new Promise(async resolve => {
+    // Ensure databases have the correct indexes set on them
+
+    // Set MongoDB indexes
+    // Quote hashes must be unique, but text and source.url just need to be indexed for performance
+    await mongodb.createIndex(MONGO_QUOTE_COLLECTION, 'hash', { unique: true })
+    await mongodb.createIndex(MONGO_QUOTE_COLLECTION, ['text', 'source.url'])
+    // Article URLs must be unique
+    await mongodb.createIndex(MONGO_ARTICLE_COLLECTION, 'url', { unique: true })
+
+    // View MongoDB index status
+    // console.log(await db.indexInformation(MONGO_QUOTE_COLLECTION))
+    // console.log(await db.indexInformation(MONGO_ARTICLE_COLLECTION))
+
+    // Elasticsearch
+    // @TODO By default all fields are indexed, but room for optimisation and constraints!
+
+    resolve(true)
+  })
+}
