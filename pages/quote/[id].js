@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import classname from 'classname'
-import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
+import { useFetch, useFetchSync, HOSTNAME } from 'components/fetch-hook'
 import Head from 'components/head'
 import Nav from 'components/nav'
 import Quote from 'components/timeline/quote'
@@ -67,7 +67,7 @@ Page.getInitialProps = async ({query, res}) => {
   return {
     query,
     data,
-    url: `${getHostname()}/quote/${id}`,
+    url: `${HOSTNAME}/quote/${id}`,
     loading: true
   }
 }

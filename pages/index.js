@@ -1,7 +1,7 @@
 import Head from 'components/head'
 import Nav from 'components/nav'
 import QuoteCard from 'components/cards/quote'
-import { useFetch, useFetchSync, getHostname } from 'components/fetch-hook'
+import { useFetch, useFetchSync, HOSTNAME } from 'components/fetch-hook'
 
 const QUOTES_API_ENDPOINT = '/api/quotes'
 
@@ -35,7 +35,7 @@ Page.getInitialProps = async ({query, res}) => {
   return {
     ...query,
     data,
-    url: getHostname(),
+    url: HOSTNAME,
     loading: true
   }
 }
