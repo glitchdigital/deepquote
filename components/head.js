@@ -4,7 +4,7 @@ const defaultDescription = 'Did they really say that?'
 const defaultOGURL = ''
 const defaultOGImage = ''
 
-const Head = (props) => (
+export default (props) => (
   <NextHead>
     <meta charSet='UTF-8' />
     <title>{props.title || ''}</title>
@@ -23,7 +23,8 @@ const Head = (props) => (
     <meta property='og:image' content={props.ogImage || defaultOGImage} />
     <meta property='og:image:width' content='1200' />
     <meta property='og:image:height' content='630' />
+    {/* https://fonts.google.com/specimen/Nunito */ }
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap' rel='stylesheet' />
   </NextHead>
 )
 
-export default Head

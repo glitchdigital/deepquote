@@ -3,6 +3,7 @@
 /* Begin custom styles */
 body {
   @apply bg-white;
+  font-family: 'Nunito', sans-serif;
 }
 h1 {
   @apply text-5xl font-thin;
@@ -17,7 +18,7 @@ a {
   @apply text-blue-600 underline;
 }
 header > nav > a {
-  @apply no-underline block px-1 py-1 rounded-full text-gray-800;
+  @apply no-underline block px-1 py-1 text-gray-800;
   &:active,
   &:hover {
     @apply underline text-blue-500;

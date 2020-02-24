@@ -3,7 +3,7 @@ import Link from 'next/link'
 import classname from 'classname'
 import { Home, Search } from 'react-zondicons'
 
-const Nav = () => {
+export default () => {
   const [menuOpenState, setMenuOpenState] = useState(false)
   const toggleMenuOpenState = () => setMenuOpenState(!menuOpenState)
 
@@ -13,7 +13,7 @@ const Nav = () => {
       <Link href='/'>
         <a className='no-underline hover:underline border-2 border-transparent text-gray-800 hover:text-blue-500'>
           <span className='hidden sm:inline lg:hidden'><Home/></span>
-          <span className='inline sm:hidden lg:inline text-lg font-serif'>Did They Really Say That?</span>
+          <span className='inline sm:hidden lg:inline text-lg font-bold'>Did They Really Say That?</span>
         </a>
       </Link>
       <div className='sm:hidden'>
@@ -25,7 +25,7 @@ const Nav = () => {
         </button>
       </div>
     </div>
-    <nav className={classname('px-2 pt-2 pb-4 sm:flex sm:p-0', { 'hidden': !menuOpenState })}>
+    <nav className={classname('font-semibold px-2 pt-2 pb-4 sm:flex sm:p-0', { 'hidden': !menuOpenState })}>
       <div className='relative'>
         <Search className='text-gray-500 pointer-events-none' style={{position: 'absolute', left: 14, top: 12}}/>
         <input aria-label='Search' autoComplete='off' spellCheck='false'  className='mb-1 sm:mb-0 py-2 pr-4 pl-10 w-full bg-gray-200 border-gray-200 outline-none  border-2 focus:border-blue-500 focus:bg-white sm:w-auto focus:shadow-lg rounded-full' placeholder='Search...'/>
@@ -37,5 +37,3 @@ const Nav = () => {
   </header>
   )
 }
-
-export default Nav

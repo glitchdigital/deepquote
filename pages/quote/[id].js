@@ -24,7 +24,7 @@ const Page = (props) => {
         <div className='relative m-auto pl-4 pr-4 md:p-0' style={{maxWidth: 800}}>
           <div className='relative rounded-lg bg-gray-300 z-30'>
             <Quote {...quote}/>
-            <div className='absolute right-0 text-sm rounded-full border shadow-sm' style={{bottom: '-50px'}}>
+            <div className='absolute right-0 text-sm font-semibold rounded-full border shadow-sm' style={{bottom: '-50px'}}>
               <Link href={`/quote/[id]`} as={`/quote/${quote.hash}`}>
                 <a className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-4 py-2 hover:bg-white', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': !showAll })}>
                   Exact matches
