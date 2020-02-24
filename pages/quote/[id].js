@@ -22,7 +22,7 @@ const Page = (props) => {
 
   return (
     <>
-      <Head title={`"${quote?.text}"`} url={url}/>
+      <Head title={quote?.text ? `"${quote.text}"` : ''} url={url}/>
       <Nav />
       {quote &&
         <div className='bg-gray-100 pt-5 md:pt-10 pb-10 border-b'>
