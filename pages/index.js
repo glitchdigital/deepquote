@@ -8,10 +8,14 @@ const QUOTES_API_ENDPOINT = '/api/quotes'
 
 const Page = (props) => {
   const { url } = props
-  let [ data, loading ] = useFetch(QUOTES_API_ENDPOINT)
-  
-  // Use server side render provided data while client is fetching latest version
-  const quotes = loading ? props.data : data
+  let quotes = props.quotes
+
+  // If we don't have quotes in a prop (as Client Side Rendering)
+  // then we need to fetch them client side using a React hook
+  if (!quotes) {
+    const [ data, loading ] = useFetch(QUOTES_API_ENDPOINT)
+    if (!loading) quotes = data
+  }
 
   return (
     <>
@@ -22,7 +26,7 @@ const Page = (props) => {
         <p className='text-lg md:text-3xl text-gray-600 mb-10 font-semibold'>Find the earliest evidence of a quote</p>
       </div>
       <div className='mt-4 grid lg:grid-cols-3 pl-2 pr-2 mb-2 bg-gray-100 border-t pt-2' style={{minHeight: '500px'}}>
-        {quotes.map((quote) => <QuoteCard key={quote.hash} {...quote}/> )}
+        {quotes?.map((quote) => <QuoteCard key={quote.hash} {...quote}/> )}
       </div>
       <div className="mt-4">
         <hr/>
@@ -34,16 +38,19 @@ const Page = (props) => {
   )
 }
 
-Page.getInitialProps = async ({query, res}) => {
-  const data = await useFetchSync(QUOTES_API_ENDPOINT)
+Page.getInitialProps = async ({res}) => {
+  let quotes
 
-  if (res) res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
+  if (res) {
+    // When Server Side Rendering, set cache headers and fetch quotes from API
+    // before rendering as React hooks don't work when rendering server side
+    res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
+    quotes = await useFetchSync(QUOTES_API_ENDPOINT)
+  }
 
   return {
-    ...query,
-    data,
-    url: HOSTNAME,
-    loading: true
+    quotes,
+    url: HOSTNAME
   }
 }
 
