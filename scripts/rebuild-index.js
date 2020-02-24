@@ -57,13 +57,14 @@ const FORCE_RECRAWL = false
         let article = {}
         if (FORCE_RECRAWL === true || !doc.html) {
           console.log(`> Fetching HTML for ${doc.url}`)
-          article = await fetchArticle(doc.url)
+          const { html } = await fetchArticle(doc.url)
+          article = await parseArticle(doc.url, html)
         } else {
           console.log(`> Parsing HTML for ${doc.url}`)
           article = await parseArticle(doc.url, doc.html)
         }
 
-        console.log(" * Parsed article.")
+        console.log(" * Parsed article")
 
         // Add metadata for scraper 
         article.scraper = {
@@ -73,11 +74,11 @@ const FORCE_RECRAWL = false
 
         // Save new article object (totally replace old object, to ensure consistancy).
         await addArticle(article)
-        console.log(" * Saved article.")
+        console.log(" * Saved article")
 
         // Save quotes from from the article (uses helper method).
         await addQuotesFromArticle(article)
-        console.log(` * Saved ${article.quotes.length} quotes.`)
+        console.log(` * Saved ${article.quotes.length} quotes`)
 
       } catch (e) {
         console.error(`Error iterating over MongoDB collection`, e)
