@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 
+import { DEFAULT_CACHE_CONTROL_HEADER }  from 'lib/cache-control'
 import Head from 'components/head'
 import Nav from 'components/nav'
 import QuoteCard from 'components/cards/quote'
@@ -46,7 +47,7 @@ Page.getInitialProps = async ({res}) => {
   if (res) {
     // When Server Side Rendering, set cache headers and fetch quotes from API
     // before rendering as React hooks don't work when rendering server side
-    res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
+    res.setHeader('Cache-Control', DEFAULT_CACHE_CONTROL_HEADER)
     quotes = await useFetchSync(QUOTES_API_ENDPOINT)
   }
 

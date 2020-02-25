@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import classname from 'classname'
+
+import { DEFAULT_CACHE_CONTROL_HEADER }  from 'lib/cache-control'
 import { useFetch, useFetchSync, HOSTNAME } from 'components/fetch-hook'
 import Head from 'components/head'
 import Nav from 'components/nav'
@@ -71,7 +73,7 @@ Page.getInitialProps = async ({query, res}) => {
   if (res) {
     // When Server Side Rendering, set cache headers and fetch quotes from API
     // before rendering as React hooks don't work when rendering server side
-    res.setHeader('Cache-Control', `public,max-age=60,s-maxage=${60 * 60}`)
+    res.setHeader('Cache-Control', DEFAULT_CACHE_CONTROL_HEADER)
     quote = await useFetchSync(QUOTE_API_ENDPOINT(id))
   }
 
