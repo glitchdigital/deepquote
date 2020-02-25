@@ -1,6 +1,6 @@
 {
   "name": "did-they-really-say-that",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": "https://github.com/glitchdigital/did-they-really-say-that.git",
   "scripts": {
     "dev": "next",

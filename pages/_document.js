@@ -1,12 +1,12 @@
 import NextDocument, { Head, Main, NextScript } from 'next/document'
 
-import getLocaleFromCtx from 'lib/locales/get-locale-from-ctx'
+import getLocale from 'lib/locales/get-locale'
 
 export default class Document extends NextDocument {
   static async getInitialProps(ctx) {
     const initialProps = await NextDocument.getInitialProps(ctx)
 
-    const locale = getLocaleFromCtx(ctx)
+    const locale = getLocale(ctx)
 
     // Load source for translation file and inject into page
     let i18nCatalog = await import(`raw-loader!../locales/${locale}/messages.js`).then(mod => mod.default)

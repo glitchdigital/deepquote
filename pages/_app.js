@@ -2,14 +2,14 @@ import NextApp from 'next/app'
 import { I18nProvider } from '@lingui/react'
 
 import catalog from 'lib/locales/catalog'
-import getLocaleFromCtx from 'lib/locales/get-locale-from-ctx'
+import getLocale from 'lib/locales/get-locale'
 
 import './_app.css'
 
 export default class App extends NextApp {
   static async getInitialProps({ Component, ctx }) {
 
-    const locale = getLocaleFromCtx(ctx)
+    const locale = getLocale(ctx)
 
     let pageProps = {}
     if (Component.getInitialProps) {
