@@ -7,6 +7,10 @@ const { ELASTICSEARCH_URI, ELASTICSEARCH_QUOTE_INDEX } = require('lib/db/elastic
 module.exports = async (req, res) => {
   const { id } = queryParser(req)
 
+  // @TODO Read 'lang' from query string
+  // @FIXME Temporarily hard coding as 'de' for now to hide other results
+  const lang = 'de'
+
   const client = new Client({ node: ELASTICSEARCH_URI })
   const findQuoteByIdResult = await client.search({
     index: ELASTICSEARCH_QUOTE_INDEX,
@@ -29,14 +33,20 @@ module.exports = async (req, res) => {
       index: ELASTICSEARCH_QUOTE_INDEX,
       body: { 
         query: { 
-          match: { text: quote.text },
+          bool: {
+            must: [
+              { match: { text: quote.text } },
+              { match: { lang } },
+            ],
+          },
+          // match_phrase: { lang }
           // more_like_this : {
           //   fields: ['text'],
           //   like: quote.text,
           //   min_term_freq : 2,
           //   max_query_terms : 12
           // }
-        }
+        },
       },
       from: 0,
       size: 100
