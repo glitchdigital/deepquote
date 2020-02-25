@@ -28,7 +28,7 @@ const Page = (props) => {
       <Nav />
       {quote &&
         <div className='bg-gray-100 pt-5 md:pt-10 pb-10 border-b'>
-          <div className='relative m-auto pl-4 pr-4 md:p-0' style={{maxWidth: 800}}>
+          <div className='relative m-auto pl-4 pr-4 md:p-0 max-w-screen-md'>
             <div className='relative rounded-lg bg-gray-300 z-30'>
               <Quote {...quote}/>
               <div className='absolute right-0 text-sm font-semibold rounded-full border shadow-sm' style={{bottom: '-50px'}}>

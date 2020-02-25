@@ -28,15 +28,24 @@ const Page = (props) => {
         <h1 className='mb-2 mt-10 mx-2 leading-tight text-5xl lg:text-6xl font-bold'>Did they really say that?</h1>
         <p className='text-lg md:text-3xl text-gray-600 mb-10 font-semibold'>Find the earliest evidence of a quote</p>
       </div>
-      <div className='mt-4 grid lg:grid-cols-3 pl-2 pr-2 mb-2 bg-gray-100 border-t pt-2' style={{minHeight: '500px'}}>
-        {quotes?.map((quote) => <QuoteCard key={quote.hash} {...quote}/> )}
+      <div className='relative mt-4 bg-gray-100 border-t p-2 pb-0 overflow-auto' style={{minHeight: 500}}>
+        <div className="block absolute w-full bottom-0 z-10"
+          style={{
+            height: 100,
+            backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))'
+          }}
+        />
+        <div className='m-auto max-w-screen-xl'>
+          {splitArrayIntoParts(quotes, 3).map((column,i) => 
+            <div key={`quote-column-${i}`} className='inline-block w-full lg:w-1/3 block p-2 px-2 float-left overflow-hidden' style={{maxHeight: 1000}}>
+              {column.map((quote) => <QuoteCard key={quote.hash} {...quote}/> )}
+            </div>
+          )}
+        </div>
       </div>
-      <div className="mt-4">
-        <hr/>
-        <p className="text-sm text-gray-800 text-center p-4">
-          <Trans id="app_version"/> {version}
-        </p>
-      </div>
+      <p className="text-gray-800 text-center px-4 py-8">
+        <Trans id="app_version"/> {version}
+      </p>
     </>
   )
 }
@@ -55,6 +64,16 @@ Page.getInitialProps = async ({res}) => {
     quotes,
     url: HOSTNAME
   }
+}
+
+// @FIXME Not performant, but is practical given the array is fairly small
+function splitArrayIntoParts(inputArray, numberOfParts) {
+  const copyOfInputArray = inputArray ? JSON.parse(JSON.stringify(inputArray)) : []
+  let result = [];
+  for (let i = numberOfParts; i > 0; i--) {
+      result.push(copyOfInputArray.splice(0, Math.ceil(copyOfInputArray.length / i)))
+  }
+  return result
 }
 
 export default Page

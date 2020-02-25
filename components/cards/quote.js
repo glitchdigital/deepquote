@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { NewsPaper, Calendar } from 'react-zondicons'
 
 export default ({text, hash, source}) => (
-  <div className='shadow-lg inline-block relative text-left pb-6 rounded-lg bg-white m-2'>
+  <div className='w-full mb-4 pb-6 shadow-lg relative text-left rounded-lg bg-white'>
     <Link href={`/quote/[id]`} as={`/quote/${hash}`}>
       <a className='no-underline text-gray-800 hover:text-blue-500'>
         <p className='w-full pt-4 px-4 uppercase text-gray-600 font-extrabold'>
