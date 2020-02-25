@@ -1,20 +1,31 @@
-// import App from 'next/app'
+import NextApp from 'next/app'
+import { I18nProvider } from '@lingui/react'
+
+import catalog from 'lib/locales/catalog'
+import getLocaleFromCtx from 'lib/locales/get-locale-from-ctx'
+
 import './_app.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default class App extends NextApp {
+  static async getInitialProps({ Component, ctx }) {
+
+    const locale = getLocaleFromCtx(ctx)
+
+    let pageProps = {}
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
+    }
+
+    return { pageProps, locale }
+  }
+
+  render() {
+    const { Component, pageProps, locale } = this.props
+
+    return (
+      <I18nProvider language={locale} catalogs={{ [locale]: catalog(locale) }}>
+        <Component {...pageProps} />
+      </I18nProvider>
+    )
+  }
 }
-
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-//
-//   return { ...appProps }
-// }
-
-export default MyApp

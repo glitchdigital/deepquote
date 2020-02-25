@@ -1,3 +1,5 @@
+import { Trans } from '@lingui/macro'
+
 import Head from 'components/head'
 import Nav from 'components/nav'
 import QuoteCard from 'components/cards/quote'
@@ -31,7 +33,7 @@ const Page = (props) => {
       <div className="mt-4">
         <hr/>
         <p className="text-sm text-gray-800 text-center p-4">
-          Version {version}
+          <Trans id="app_version"/> {version}
         </p>
       </div>
     </>

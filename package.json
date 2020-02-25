@@ -1,20 +1,25 @@
 {
   "name": "did-they-really-say-that",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": "https://github.com/glitchdigital/did-they-really-say-that.git",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
-    "rebuild-index": "babel-node scripts/rebuild-index.js"
+    "rebuild-index": "babel-node scripts/rebuild-index.js",
+    "lang:add": "lingui add-locale",
+    "lang:extract": "lingui extract",
+    "lang:compile": "lingui compile"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.6.0",
     "@fullhuman/postcss-purgecss": "^2.0.6",
+    "@lingui/react": "^2.9.1",
     "@next/bundle-analyzer": "^9.2.2",
     "app-module-path": "^2.2.0",
     "autoprefixer": "^9.7.4",
+    "babel-plugin-macros": "^2.8.0",
     "classname": "0.0.0",
     "compromise": "^13.1.0",
     "dotenv": "^8.2.0",
@@ -26,8 +31,10 @@
     "micro-query": "^0.3.0",
     "mongodb": "^3.5.3",
     "next": "^9.2.1",
+    "next-cookies": "^2.0.3",
     "postcss-import": "^12.0.1",
     "postcss-nested": "^4.2.1",
+    "raw-loader": "^4.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-zondicons": "^1.1.9",
@@ -47,6 +54,9 @@
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
+    "@lingui/cli": "^2.9.1",
+    "@lingui/loader": "^2.9.1",
+    "@lingui/macro": "^2.9.1",
     "moment": "^2.24.0"
   }
 }

@@ -8,7 +8,6 @@ const HOSTNAME = (typeof window !== 'undefined') ? `${window.location.protocol}/
 
 // Synchronous fetch method, useful for Server Side Rendering
 const useFetchSync = async (url) => {
-  console.log("server fetch", `${HOSTNAME}${url}`)
   const response = await fetch(`${HOSTNAME}${url}`)
   const json = await response.json()
   return json
@@ -19,7 +18,6 @@ const useFetch = (url) => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const fetchUrl = async () => {
-    console.log("client fetch", `${HOSTNAME}${url}`)
     const response = await fetch(`${HOSTNAME}${url}`)
     const json = await response.json()
     setData(json)
