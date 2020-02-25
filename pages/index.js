@@ -28,16 +28,16 @@ const Page = (props) => {
         <h1 className='mb-2 mt-10 mx-2 leading-tight text-5xl lg:text-6xl font-bold'>Did they really say that?</h1>
         <p className='text-lg md:text-3xl text-gray-600 mb-10 font-semibold'>Find the earliest evidence of a quote</p>
       </div>
-      <div className='relative mt-4 bg-gray-100 border-t p-2 pb-0 overflow-auto' style={{minHeight: 500}}>
+      <div className='relative mt-4 bg-gray-100 border-t pb-0 overflow-auto' style={{minHeight: 100}}>
         <div className="block absolute w-full bottom-0 z-10"
           style={{
             height: 100,
             backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))'
           }}
         />
-        <div className='m-auto max-w-screen-xl'>
+        <div className='m-auto w-full max-w-screen-xl px-2 py-4 lg:px-2 lg:py-2'>
           {splitArrayIntoParts(quotes, 3).map((column,i) => 
-            <div key={`quote-column-${i}`} className='inline-block w-full lg:w-1/3 block p-2 px-2 float-left overflow-hidden' style={{maxHeight: 1000}}>
+            <div key={`quote-column-${i}`} className='inline-block lg:w-1/3 block p-0 lg:p-2 px-2 float-left overflow-hidden max-h-full lg:max-h-screen'>
               {column.map((quote) => <QuoteCard key={quote.hash} {...quote}/> )}
             </div>
           )}
