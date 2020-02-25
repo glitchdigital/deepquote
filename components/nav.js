@@ -8,7 +8,7 @@ export default () => {
   const toggleMenuOpenState = () => setMenuOpenState(!menuOpenState)
 
   return (
-  <header className={classname('border-b sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3', {'bg-white sm:bg-transparent shadow-xl sm:shadow-none': menuOpenState})}>
+  <header className={classname('relative z-10 border-b sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3 bg-white', {'shadow-xl sm:shadow-none': menuOpenState})}>
     <div className='flex items-center justify-between px-4 py-3 sm:p-0'>
       <Link href='/'>
         <a className='no-underline hover:underline border-2 border-transparent text-gray-800 hover:text-blue-500'>
