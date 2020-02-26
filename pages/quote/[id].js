@@ -27,7 +27,7 @@ const Page = (props) => {
       <Head title={quote?.text ? `"${quote.text}"` : ''} url={url}/>
       <Nav />
       <div className='bg-gray-100 fixed top-0 w-full h-screen z-0'/>
-      <div className={classname('transition-all ease-in-out duration-500 relative overflow-hidden', quote ? 'opacity-1' : 'opacity-0')}>
+      <div className={classname('transition-all ease-in-out duration-200 relative overflow-hidden', quote ? 'opacity-1' : 'opacity-0')}>
         {quote &&
           <div className='pt-5 sm:pt-10 pb-5'>
             <div className='relative m-auto px-5 max-w-screen-md'>
