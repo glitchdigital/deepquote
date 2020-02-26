@@ -8,6 +8,7 @@ export default ({defaultSearchText}) => {
   const searchInput = useRef()
   const [menuOpenState, setMenuOpenState] = useState(false)
   const toggleMenuOpenState = () => {
+    // Set focus on search input when menu is opened
     if (!menuOpenState) setTimeout(() => searchInput.current.focus(), 100)
     setMenuOpenState(!menuOpenState)
   }
@@ -17,6 +18,7 @@ export default ({defaultSearchText}) => {
 
   const onSearchFormSubmit = event => {
     event.preventDefault()
+    setMenuOpenState(false) // Collapse menu on mobile immediately after searching
     const href = `/search?t=${encodeURIComponent(searchText)}`
     const as = href
     Router.push(href, as)
