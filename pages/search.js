@@ -18,10 +18,8 @@ const Page = (props) => {
       // Only fetch search results if they haven't been fetched already
       if (!props.searchResults) {
         setLoading(true)
-        setTimeout(async () => {
-          setSearchResults( await useFetchSync(SEARCH_API_ENDPOINT(searchText)))
-          setLoading(false)
-        }, 1000)
+        setSearchResults( await useFetchSync(SEARCH_API_ENDPOINT(searchText)))
+        setLoading(false)
       }
     })()
   }, [searchText])
