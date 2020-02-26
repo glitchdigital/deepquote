@@ -1,8 +1,9 @@
+import { useState, useEffect} from 'react'
 import Link from 'next/link'
 import classname from 'classname'
 
 import { DEFAULT_CACHE_CONTROL_HEADER }  from 'lib/cache-control'
-import { useFetch, useFetchSync, HOSTNAME } from 'components/fetch-hook'
+import { useFetchSync, HOSTNAME } from 'components/fetch-hook'
 import Head from 'components/head'
 import Nav from 'components/nav'
 import Quote from 'components/timeline/quote'
@@ -13,14 +14,16 @@ const QUOTE_API_ENDPOINT = (id) => `/api/quote?id=${encodeURIComponent(id)}`
 const Page = (props) => {
   const { id = null, showAll: showAllQueryParam, url } = props.query
   const showAll = (showAllQueryParam === 'true')
-  let quote = props.quote
+  const [quote, setQuote] = useState(props.quote)
 
-  // If we don't have a quote in a prop (as Client Side Rendering)
-  // then we need to fetch it client side using a React hook
-  if (!quote) {
-    const [data, loading] = useFetch(QUOTE_API_ENDPOINT(id))
-    if (!loading) quote = data
-  }
+  useEffect(() => {
+    (async () => {
+      // Only fetch quote if it hasn't been fetched already
+      if (!quote || quote.hash != id) {
+        setQuote( await useFetchSync(QUOTE_API_ENDPOINT(id)))
+      }
+    })()
+  }, [id])
 
   return (
     <>

@@ -1,11 +1,22 @@
 import { useState } from 'react'
+import Router from 'next/router'
 import Link from 'next/link'
 import classname from 'classname'
 import { Home, Search } from 'react-zondicons'
 
-export default () => {
+export default ({defaultSearchText}) => {
   const [menuOpenState, setMenuOpenState] = useState(false)
   const toggleMenuOpenState = () => setMenuOpenState(!menuOpenState)
+
+  const [searchText = '', setSearchText] = useState(defaultSearchText)
+  const onSearchTextChange = event => setSearchText(event.target.value)
+
+  const onSearchFormSubmit = event => {
+    event.preventDefault()
+    const href = `/search?t=${encodeURIComponent(searchText)}`
+    const as = href
+    Router.push(href, as)
+  }
 
   return (
   <header className={classname('relative z-10 border-b sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3 bg-white', {'shadow-xl sm:shadow-none': menuOpenState})}>
@@ -26,10 +37,18 @@ export default () => {
       </div>
     </div>
     <nav className={classname('font-semibold px-2 pt-2 pb-4 sm:flex sm:p-0', { 'hidden': !menuOpenState })}>
-      <div className='relative'>
+      <form className='relative' onSubmit={onSearchFormSubmit}>
         <Search className='text-gray-500 pointer-events-none' style={{position: 'absolute', left: 14, top: 12}}/>
-        <input aria-label='Search' autoComplete='off' spellCheck='false'  className='mb-1 sm:mb-0 py-2 pr-4 pl-10 w-full bg-gray-200 border-gray-200 outline-none  border-2 focus:border-blue-500 focus:bg-white sm:w-auto focus:shadow-lg rounded-full' placeholder='Search...'/>
-      </div>
+        <input
+          aria-label='Search'
+          autoComplete='off'
+          spellCheck='false'
+          className='mb-1 sm:mb-0 py-2 pr-4 pl-10 w-full bg-gray-200 border-gray-200 outline-none border-2 focus:border-blue-500 focus:bg-white sm:w-auto focus:shadow-lg rounded-full'
+          placeholder='Search...'
+          value={searchText}
+          onChange={onSearchTextChange}
+          />
+      </form>
       <a href='#' className='border-2 border-transparent mt-0 sm:mt-1 sm:ml-2'>Who we are</a>
       <a href='#' className='border-2 border-transparent mt-0 sm:mt-1 sm:ml-2'>FAQ</a>
       <a href='#' className='border-2 border-transparent mt-0 sm:mt-1 sm:ml-2'>Impressum</a>

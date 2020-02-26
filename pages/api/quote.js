@@ -36,9 +36,9 @@ module.exports = async (req, res) => {
           bool: {
             must: [
               { match: { text: quote.text } },
-              { match: { lang } },
-            ],
-          },
+              { match: { lang } }
+            ]
+          }
           // match_phrase: { lang }
           // more_like_this : {
           //   fields: ['text'],
@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
           //   min_term_freq : 2,
           //   max_query_terms : 12
           // }
-        },
+        }
       },
       from: 0,
       size: 100
