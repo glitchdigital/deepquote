@@ -33,13 +33,13 @@ const Page = (props) => {
               <div className='relative rounded-lg bg-gray-300 z-30'>
                 <Quote {...quote}/>
                 <div className='absolute right-0 text-sm font-semibold rounded-full border shadow-sm' style={{bottom: '-50px'}}>
-                  <Link href={`/quote/[id]`} as={`/quote/${quote?.hash}`}>
-                    <a className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-4 py-2 hover:bg-white bg-gray-100', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': !showAll })}>
+                  <Link href={`/quote/[id]`} as={`/quote/${quote?.hash}`} scroll={false}>
+                    <a className={classname('text-gray-600 inline-block no-underline hover:underline rounded-l-full px-4 py-2 hover:text-gray-800 bg-white', { 'bg-gray-200 text-gray-800 shadow-inner': !showAll })}>
                       Exact matches
                     </a>
                   </Link>
-                  <Link href={`/quote/[id]?showAll=true`} as={`/quote/${quote?.hash}?showAll=true`}>
-                    <a className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r-full px-4 py-2 hover:bg-white bg-gray-100', { 'bg-gray-200 hover:bg-gray-200 text-gray-800 shadow-inner': showAll })}>
+                  <Link href={`/quote/[id]?showAll=true`} as={`/quote/${quote?.hash}?showAll=true`} scroll={false}>
+                    <a className={classname('text-gray-600 inline-block no-underline hover:underline rounded-r-full px-4 py-2 hover:text-gray-800 bg-white', { 'bg-gray-200 text-gray-800 shadow-inner': showAll })}>
                       Possible matches
                     </a>
                   </Link>

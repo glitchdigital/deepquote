@@ -6,7 +6,7 @@ const MAX_TAGS = 5
 export default ({url, name, publisher, datePublished, suggestedResult, keywords, position}) => (
   <>
     <div style={{width: 100}} className='z-30 flex-none hidden sm:block'>
-      <div style={{height: 50, width: 50}} className={classname('mt-5 m-auto border-4 rounded-full text-center pt-2 text-lg font-extrabold', suggestedResult ? 'border-gray-300 bg-gray-100 text-gray-500' : 'bg-white border-gray-400 shadow-lg text-gray-600')}>
+      <div style={{height: 50, width: 50}} className={classname('mt-5 m-auto border-4 rounded-full text-center pt-2 text-lg font-extrabold bg-white', suggestedResult ? 'border-gray-300 text-gray-500' : 'border-gray-400 shadow-lg text-gray-600')}>
         {position}
       </div>
     </div>
