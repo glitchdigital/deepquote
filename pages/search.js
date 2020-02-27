@@ -40,8 +40,7 @@ const Page = (props) => {
     <>
       <Head title="Search" url={url}/>
       <Nav defaultSearchText={searchText} />
-      <div className='bg-gray-100 fixed top-0 w-full h-screen z-0'/>
-      <div className='text-center py-5 xbg-white relative m-auto px-5 max-w-screen-lg px-5'>
+      <div className='text-center py-5 relative m-auto px-5 max-w-screen-md px-5'>
         {!loading && searchText.length > 0 && searchResults && searchResults.length === 0 && 
           <p className='text-xl text-gray-600'>No search results for "<b>{searchText}</b>"</p>
         }

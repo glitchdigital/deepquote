@@ -4,13 +4,13 @@ import classname from 'classname'
 const MAX_TAGS = 5
 
 export default ({url, name, publisher, datePublished, suggestedResult, keywords, position}) => (
-  <div className='flex mb-6 sm:mb-8 z-20 relative'>
-    <div style={{width: 100}} className='flex-none hidden sm:block'>
+  <>
+    <div style={{width: 100}} className='z-30 flex-none hidden sm:block'>
       <div style={{height: 50, width: 50}} className={classname('mt-5 m-auto border-4 rounded-full text-center pt-2 text-lg font-extrabold', suggestedResult ? 'border-gray-300 bg-gray-100 text-gray-500' : 'bg-white border-gray-400 shadow-lg text-gray-600')}>
         {position}
       </div>
     </div>
-    <div className='flex-grow'>
+    <div className='z-30 flex-grow'>
       <div className={classname('w-full text-left inline-block bg-white rounded-lg border-2', { 'bg-white shadow-xl border-2 border-gray-400': !suggestedResult })}>
         {suggestedResult && <span className={'absolute top-0 right-0 px-2 py-1 bg-gray-300 text-gray-600 rounded-bl rounded-tr text-sm'}>Possible match</span>}
         <p className='pt-3 px-4 uppercase text-gray-600 font-extrabold'>
@@ -35,5 +35,5 @@ export default ({url, name, publisher, datePublished, suggestedResult, keywords,
         </p>
       </div>
     </div>
-  </div>
+  </>
 )
