@@ -43,10 +43,11 @@ export default ({defaultSearchText}) => {
       </div>
     </div>
     <nav className={classname('font-semibold px-2 pt-2 pb-4 sm:flex sm:p-0', { 'hidden': !menuOpenState })}>
-      <form className='relative' onSubmit={onSearchFormSubmit}>
+      <form method='GET' action='/search' className='relative' onSubmit={onSearchFormSubmit}>
         <Search className='text-gray-500 pointer-events-none' style={{position: 'absolute', left: 14, top: 12}}/>
         <input
           id='searchInput'
+          name='t'
           ref={searchInput}
           aria-label='Search'
           autoComplete='off'

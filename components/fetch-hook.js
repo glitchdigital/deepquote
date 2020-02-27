@@ -13,19 +13,32 @@ const useFetchSync = async (url) => {
   return json
 }
 
-// Hook for making calls to fetch
-const useFetch = (url) => {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
-  const fetchUrl = async () => {
-    const response = await fetch(`${HOSTNAME}${url}`)
+// Hook for making calls to fetch to get data
+const useFetch = (path, defaultValue = null, force = false) => {
+  // Use defaultValue for initial data and set loading to false
+  // if a defaultValue is specified.
+  //
+  // The defaultValue option is useful to pass directly from props
+  // in cases where a Server Side Render may mean we already have
+  // the data and don't actually need to make a fetch request.
+  const [data, setData] = useState(defaultValue)
+  const [loading, setLoading] = useState(!defaultValue)
+  // Fetch URL - called from useEffect()
+  const fetchUrl = async (url) => {
+    const response = await fetch(url)
     const json = await response.json()
     setData(json)
     setLoading(false)
   }
+  // Use effect is triggered anytime the path changes.
+  // This makes it easy to write a hook that requests
+  // data by ID or keywords in a query string, and that
+  // only actually makes a fetch request when needed.
   useEffect(() => {
-    fetchUrl()
-  }, [])
+    // Only call fetch if there is no defaultValue or
+    // force is set to true.
+    if (force || !defaultValue) fetchUrl(`${HOSTNAME}${path}`)
+  }, [path])
   return [data, loading]
 }
 

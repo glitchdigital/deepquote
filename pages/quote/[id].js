@@ -1,9 +1,8 @@
-import { useState, useEffect} from 'react'
 import Link from 'next/link'
 import classname from 'classname'
 
 import { DEFAULT_CACHE_CONTROL_HEADER }  from 'lib/cache-control'
-import { useFetchSync, HOSTNAME } from 'components/fetch-hook'
+import { useFetch, useFetchSync, HOSTNAME } from 'components/fetch-hook'
 import Head from 'components/head'
 import Nav from 'components/nav'
 import Quote from 'components/timeline/quote'
@@ -15,25 +14,17 @@ const QUOTE_API_ENDPOINT = (id) => `/api/quote?id=${encodeURIComponent(id)}`
 const Page = (props) => {
   const { id = null, showAll: showAllQueryParam, url } = props.query
   const showAll = (showAllQueryParam === 'true')
-  const [quote, setQuote] = useState(props.quote)
-
-  useEffect(() => {
-    (async () => {
-      // Only fetch quote if it hasn't been fetched already
-      if (!quote || quote.hash != id)
-        setQuote(await useFetchSync(QUOTE_API_ENDPOINT(id)))
-    })()
-  }, [id])
+  const [ quote, loading ] = useFetch(QUOTE_API_ENDPOINT(id), props.quote)
 
   return (
     <>
-      <Head title={quote?.text ? `"${quote.text}"` : ''} url={url}/>
+      <Head title={quote?.text ? `"${quote.text}"` : 'Quote'} url={url}/>
       <Nav />
       <div className='bg-gray-100 fixed top-0 w-full h-screen z-0'/>
-      <div className='pt-5 sm:pt-10 relative overflow-hidden'>
-        {!quote && <Spinner/>}
-        <div className={classname('transition-all ease-in-out duration-200', quote ? 'opacity-1' : 'opacity-0')}>
-          {quote &&
+      <div className='pt-5 sm:pt-10 relative'>
+        {loading && <Spinner/>}
+        <div className={classname('transition-all ease-in-out duration-100', quote ? 'opacity-1' : 'opacity-0')}>
+          {!loading &&
             <div className='relative m-auto px-5 max-w-screen-md'>
               <div className='relative rounded-lg bg-gray-300 z-30'>
                 <Quote {...quote}/>
