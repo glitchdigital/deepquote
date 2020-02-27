@@ -1,24 +1,27 @@
+import { useState, useEffect} from 'react'
 import { Trans } from '@lingui/macro'
 
 import { DEFAULT_CACHE_CONTROL_HEADER }  from 'lib/cache-control'
 import Head from 'components/head'
 import Nav from 'components/nav'
 import QuoteCard from 'components/cards/quote'
-import { useFetch, useFetchSync, HOSTNAME } from 'components/fetch-hook'
+import { useFetchSync, HOSTNAME } from 'components/fetch-hook'
+import Spinner from 'components/spinner'
 import { version } from 'package.json'
 
 const QUOTES_API_ENDPOINT = '/api/quotes'
 
 const Page = (props) => {
   const { url } = props
-  let quotes = props.quotes
+  const [quotes, setQuotes] = useState(props.quotes)
 
-  // If we don't have quotes in a prop (as Client Side Rendering)
-  // then we need to fetch them client side using a React hook
-  if (!quotes) {
-    const [ data, loading ] = useFetch(QUOTES_API_ENDPOINT)
-    if (!loading) quotes = data
-  }
+  useEffect(() => {
+    (async () => {
+      // Only fetch quote if it hasn't been fetched already
+      if (!quotes)
+        setQuotes((await useFetchSync(QUOTES_API_ENDPOINT)))
+    })()
+  }, [])
 
   return (
     <>
@@ -36,6 +39,7 @@ const Page = (props) => {
           }}
         />
         <div className='m-auto w-full max-w-screen-xl px-2 py-4 lg:px-2 lg:py-2'>
+          {!quotes && <Spinner/>}
           {splitArrayIntoParts(quotes, 3).map((column,i) => 
             <div key={`quote-column-${i}`} className='inline-block lg:w-1/3 block p-0 lg:p-2 px-2 float-left overflow-hidden max-h-full lg:max-h-screen'>
               {column.map((quote) => <QuoteCard key={quote.hash} {...quote}/> )}

@@ -5,6 +5,7 @@ import { useFetchSync, HOSTNAME } from 'components/fetch-hook'
 import Head from 'components/head'
 import Nav from 'components/nav'
 import SearchResult from 'components/search/result'
+import Spinner from 'components/spinner'
 
 const SEARCH_API_ENDPOINT = (searchText) => `/api/search?t=${encodeURIComponent(searchText)}`
 
@@ -18,7 +19,7 @@ const Page = (props) => {
       // Only fetch search results if they haven't been fetched already
       if (!props.searchResults) {
         setLoading(true)
-        setSearchResults( await useFetchSync(SEARCH_API_ENDPOINT(searchText)))
+        setSearchResults(await useFetchSync(SEARCH_API_ENDPOINT(searchText)))
         setLoading(false)
       }
     })()
@@ -34,8 +35,8 @@ const Page = (props) => {
         {!searchText &&
           <p className='text-xl text-gray-600'>Enter words or a quote to search for.</p>
         }
-        {loading && searchText && 
-          <p className='text-xl text-gray-600'>Searching…</p>
+        {loading &&
+          <Spinner/>
         }
         {!loading && searchText && searchText.length > 0 && searchResults && searchResults.length === 0 && 
           <p className='text-xl text-gray-600'>No results for " <b>{searchText}</b> ".</p>

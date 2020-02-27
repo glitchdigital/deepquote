@@ -39,6 +39,32 @@ input:checked ~ .toggle__dot {
   transform: translateX(100%);
   background-color: grey;
 }
+.spinner {
+  margin: auto;
+  fill: transparent;
+  stroke: #728095;
+  opacity: 0.5;
+  stroke-width: 4px;
+  animation: spinner-dash-animation 2s ease infinite, spinner-rotate-animation 2s linear infinite;
+}
+@keyframes spinner-dash-animation {
+  0% {
+    stroke-dasharray: 1,95;
+    stroke-dashoffset: 1;
+  }
+  50% {
+    stroke-dasharray: 85,95;
+    stroke-dashoffset: -25;
+  }
+  100% {
+    stroke-dasharray: 85,95;
+    stroke-dashoffset: -93;
+  }
+}
+@keyframes spinner-rotate-animation {
+  0% {transform: rotate(0deg); }
+  100% {transform: rotate(360deg); }
+}
 /* End custom styles */
 
 @tailwind components;

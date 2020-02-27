@@ -8,6 +8,7 @@ import Head from 'components/head'
 import Nav from 'components/nav'
 import Quote from 'components/timeline/quote'
 import Citation from 'components/timeline/citation'
+import Spinner from 'components/spinner'
 
 const QUOTE_API_ENDPOINT = (id) => `/api/quote?id=${encodeURIComponent(id)}`
 
@@ -19,9 +20,8 @@ const Page = (props) => {
   useEffect(() => {
     (async () => {
       // Only fetch quote if it hasn't been fetched already
-      if (!quote || quote.hash != id) {
-        setQuote( await useFetchSync(QUOTE_API_ENDPOINT(id)))
-      }
+      if (!quote || quote.hash != id)
+        setQuote(await useFetchSync(QUOTE_API_ENDPOINT(id)))
     })()
   }, [id])
 
@@ -30,9 +30,10 @@ const Page = (props) => {
       <Head title={quote?.text ? `"${quote.text}"` : ''} url={url}/>
       <Nav />
       <div className='bg-gray-100 fixed top-0 w-full h-screen z-0'/>
-      <div className={classname('transition-all ease-in-out duration-200 relative overflow-hidden', quote ? 'opacity-1' : 'opacity-0')}>
-        {quote &&
-          <div className='pt-5 sm:pt-10 pb-5'>
+      <div className='pt-5 sm:pt-10 relative overflow-hidden'>
+        {!quote && <Spinner/>}
+        <div className={classname('transition-all ease-in-out duration-200', quote ? 'opacity-1' : 'opacity-0')}>
+          {quote &&
             <div className='relative m-auto px-5 max-w-screen-md'>
               <div className='relative rounded-lg bg-gray-300 z-30'>
                 <Quote {...quote}/>
@@ -66,8 +67,8 @@ const Page = (props) => {
                 )}
               </div>
             </div>
-          </div>
-        }
+            }
+        </div>
       </div>
     </>
   )
