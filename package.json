@@ -1,6 +1,6 @@
 {
   "name": "did-they-really-say-that",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "repository": "https://github.com/glitchdigital/did-they-really-say-that.git",
   "scripts": {
     "dev": "next",
@@ -8,6 +8,7 @@
     "analyze": "ANALYZE=true next build",
     "start": "next start",
     "rebuild-index": "babel-node scripts/rebuild-index.js",
+    "debug-parser": "babel-node scripts/debug-parser.js",
     "lang:add": "lingui add-locale",
     "lang:extract": "lingui extract",
     "lang:compile": "lingui compile"
