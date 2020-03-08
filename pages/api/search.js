@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
   // @FIXME Temporarily hard coding as 'de' for now to hide other results
   const lang = 'de'
 
+  // NB: Only returns results that are at least 3 words long
   try {
     const client = new Client({ node: ELASTICSEARCH_URI })
     const { body } = await client.search({
@@ -19,7 +20,8 @@ module.exports = async (req, res) => {
             bool: {
               must: [
                 { match: { text: searchText } },
-                { match: { lang } }
+                { match: { lang } },
+                { range: { wordCount: { gte: 3 } } }
               ]
             }
           }

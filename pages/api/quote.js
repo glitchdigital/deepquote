@@ -29,6 +29,9 @@ module.exports = async (req, res) => {
       size: 100
     }),
     // Find other (non-exact) possible matches for the quote
+    // They must be in the same language and be at least 3 words long 
+    // (unless the quote is less than 3 words. in which case they just
+    // need to be the same length or longer)
     await client.search({
       index: ELASTICSEARCH_QUOTE_INDEX,
       body: { 
@@ -36,7 +39,8 @@ module.exports = async (req, res) => {
           bool: {
             must: [
               { match: { text: quote.text } },
-              { match: { lang } }
+              { match: { lang } },
+              { range: { wordCount: { gte: (quote.wordCount < 3) ? quote.wordCount : 3 } } }
             ]
           }
           // match_phrase: { lang }

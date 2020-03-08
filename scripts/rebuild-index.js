@@ -16,7 +16,8 @@ require('app-module-path').addPath(`${__dirname}/..`)
 const { MONGO_ARTICLE_COLLECTION, MONGO_QUOTE_COLLECTION, connect, count: mongoCount } = require('lib/db/mongo')
 const { count: elasticsearchCount } = require('lib/db/elasticsearch')
 const { addArticle, addQuotesFromArticle } = require('lib/db')
-const { fetchArticle, parseArticle } = require('lib/article')
+const { fetchHtml } = require('lib/fetch')
+const { parseArticle } = require('lib/article')
 const Package = require('package.json')
 
 // Set `FORCE_RECRAWL` to true to re-fetch the HTML from the URL instead of using cached HTML
@@ -57,28 +58,36 @@ const FORCE_RECRAWL = false
         let article = {}
         if (FORCE_RECRAWL === true || !doc.html) {
           console.log(`> Fetching HTML for ${doc.url}`)
-          const { html } = await fetchArticle(doc.url)
+          const html = await fetchHtml(doc.url)
           article = await parseArticle(doc.url, html)
         } else {
           console.log(`> Parsing HTML for ${doc.url}`)
           article = await parseArticle(doc.url, doc.html)
         }
 
-        console.log(" * Parsed article")
+        console.log("  * Parsed article")
 
-        // Add metadata for scraper 
-        article.scraper = {
-          date: new Date(),
-          version: Package.version
+        // Copy crawler metadata fom existing record to new record
+        article._crawler = doc._crawler ? doc._crawler : {}
+
+        if (!article._crawler.created) {
+          article._crawler.created = new Date()
+          article._crawler.updated = article._crawler.created
+          article._crawler.version = Package.version
+        }
+      
+        if (FORCE_RECRAWL === true || !doc.html) {
+          article._crawler.updated = new Date()
+          article._crawler.version = Package.version
         }
 
         // Save new article object (totally replace old object, to ensure consistancy).
         await addArticle(article)
-        console.log(" * Saved article")
+        console.log("  * Saved article")
 
         // Save quotes from from the article (uses helper method).
         await addQuotesFromArticle(article)
-        console.log(` * Saved ${article.quotes.length} quotes`)
+        console.log(`  * Saved ${article.quotes.length} quotes`)
 
       } catch (e) {
         console.error(`Error iterating over MongoDB collection`, e)
@@ -106,6 +115,15 @@ function ensureIndexes(mongodb, elasticsearch) {
 
     // Set MongoDB indexes
     // Quote hashes must be unique, but text and source.url just need to be indexed for performance
+    //
+    // @FIXME! Source URL and Article URL should be a hash, otherwise will run into problems indexing
+    // as the URLs can exceed the maxium length of index values (eg > 1024 bytes) in MongoDB and it
+    // does not automatically hash the values. The only fix is to use hashes for the keys (eg `urlHash`).
+    //
+    // Methods that update URLs in MongoDB (e.g.`getArticle`, `addArticle`, `addQuote`) will need to be
+    // updated to be compatible with this change, and the existing index for URLs will need to be dropped.
+    // For more info, see:
+    // https://stackoverflow.com/questions/27792706/cannot-create-index-in-mongodb-key-too-large-to-index
     await mongodb.createIndex(MONGO_QUOTE_COLLECTION, 'hash', { unique: true })
     await mongodb.createIndex(MONGO_QUOTE_COLLECTION, ['text', 'source.url'])
     // Article URLs must be unique

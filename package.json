@@ -8,7 +8,8 @@
     "analyze": "ANALYZE=true next build",
     "start": "next start",
     "rebuild-index": "babel-node scripts/rebuild-index.js",
-    "debug-parser": "babel-node scripts/debug-parser.js",
+    "debug:parser": "babel-node scripts/debug-parser.js",
+    "debug:crawler": "babel-node scripts/debug-crawler.js",
     "lang:add": "lingui add-locale",
     "lang:extract": "lingui extract",
     "lang:compile": "lingui compile"

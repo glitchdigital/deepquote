@@ -13,7 +13,14 @@ module.exports = async (req, res) => {
     const { body } = await client.search({
       index: ELASTICSEARCH_QUOTE_INDEX,
       body: { 
-        query: { match_phrase: { lang } },
+        query: { 
+          bool: {
+            must: [
+              { match_phrase: { lang } },
+              { range: { wordCount: { gte: 3 } } }
+            ]
+          }
+        },
         collapse: {
           field: 'text.keyword',
           inner_hits: {

@@ -1,5 +1,6 @@
 const { send, queryParser } = require('lib/request-handler')
-const { fetchArticle, parseArticle } = require('lib/article')
+const { fetchHtml } = require('lib/fetch')
+const { parseArticle } = require('lib/article')
 const { addArticle, addQuotesFromArticle } = require('lib/db')
 
 module.exports = async (req, res, callback) => {
@@ -11,7 +12,7 @@ module.exports = async (req, res, callback) => {
     return send(res, 400, { error: 'URL parameter missing' })
 
   // Scrape URL and extract metadata
-  const html = await fetchArticle(url)
+  const html = await fetchHtml(url)
   const article = await parseArticle(url, html)
 
   // Save article to database
