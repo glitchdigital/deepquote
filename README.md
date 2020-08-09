@@ -1,6 +1,14 @@
-# Did They Really Say That?
+# Deepquote
 
-This is website for the 'Did They Really Say That' project written in [React](https://reactjs.org) with [Next.js](https://nextjs.org) and [Tailwind CSS](https://tailwindcss.com).
+This is website for www.deepquote.io
+
+## Technology stack
+
+* [React](https://reactjs.org)
+* [Tailwind CSS](https://tailwindcss.com)
+* [Next.js](https://nextjs.org)
+* Elasticsearch
+* MongoDB
 
 ## Getting Started
 
@@ -19,4 +27,4 @@ These should point to an instance of Elasticsearch and to MongoDB respectively.
 
 ## Deployment
 
-Changes to the master branch will automaically be deployed to http://did-they-really-say-that.now.sh within a few seconds.
+When changes are pushed to the main branch on GitHub they will be deployed to https://www.deepquote.io within a few seconds.

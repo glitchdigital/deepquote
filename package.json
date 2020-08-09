@@ -1,7 +1,7 @@
 {
-  "name": "did-they-really-say-that",
-  "version": "0.0.12",
-  "repository": "https://github.com/glitchdigital/did-they-really-say-that.git",
+  "name": "deepquote",
+  "version": "0.0.13",
+  "repository": "https://github.com/glitchdigital/deepquote.git",
   "scripts": {
     "dev": "next",
     "build": "next build",
