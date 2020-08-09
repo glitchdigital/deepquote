@@ -1,7 +1,7 @@
 const { Client } = require('@elastic/elasticsearch')
 
 const { send } = require('lib/request-handler')
-const { ELASTICSEARCH_URI, ELASTICSEARCH_QUOTE_INDEX } = require('lib/db/elasticsearch')
+const { ELASTICSEARCH_URL, ELASTICSEARCH_QUOTE_INDEX } = require('lib/db/elasticsearch')
 
 module.exports = async (req, res) => {
   // @TODO Read 'lang' from query string
@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   const lang = 'de'
 
   try {
-    const client = new Client({ node: ELASTICSEARCH_URI })
+    const client = new Client({ node: ELASTICSEARCH_URL })
     const { body } = await client.search({
       index: ELASTICSEARCH_QUOTE_INDEX,
       body: { 

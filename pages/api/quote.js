@@ -2,7 +2,7 @@
 const { Client } = require('@elastic/elasticsearch')
 
 const { send, queryParser } = require('lib/request-handler')
-const { ELASTICSEARCH_URI, ELASTICSEARCH_QUOTE_INDEX } = require('lib/db/elasticsearch')
+const { ELASTICSEARCH_URL, ELASTICSEARCH_QUOTE_INDEX } = require('lib/db/elasticsearch')
 
 module.exports = async (req, res) => {
   const { id } = queryParser(req)
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
   // @FIXME Temporarily hard coding as 'de' for now to hide other results
   const lang = 'de'
 
-  const client = new Client({ node: ELASTICSEARCH_URI })
+  const client = new Client({ node: ELASTICSEARCH_URL })
   const findQuoteByIdResult = await client.search({
     index: ELASTICSEARCH_QUOTE_INDEX,
     body: { query: { match_phrase: { hash: id } } },
