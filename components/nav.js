@@ -4,7 +4,7 @@ import Link from 'next/link'
 import classname from 'classname'
 import { Home, Search } from 'react-zondicons'
 
-export default ({defaultSearchText}) => {
+export default function nav({defaultSearchText}) {
   const searchInput = useRef()
   const [menuOpenState, setMenuOpenState] = useState(false)
   const toggleMenuOpenState = () => {

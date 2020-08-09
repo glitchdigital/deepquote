@@ -1,4 +1,3 @@
-import 'isomorphic-fetch'
 import { useState, useEffect } from 'react'
 
 // Use the hostname set by an environment variable for API calls
