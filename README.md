@@ -1,6 +1,6 @@
 # Deepquote
 
-This is website for www.deepquote.io
+This is website for [deepquote.io](https://deepquote.io)
 
 ## Technology stack
 
