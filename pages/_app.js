@@ -1,5 +1,6 @@
 import NextApp from 'next/app'
 import { I18nProvider } from '@lingui/react'
+import { Provider as NextAuthProvider } from 'next-auth/client'
 
 import catalog from 'lib/locales/catalog'
 import getLocale from 'lib/locales/get-locale'
@@ -23,9 +24,11 @@ export default class App extends NextApp {
     const { Component, pageProps, locale } = this.props
 
     return (
-      <I18nProvider language={locale} catalogs={{ [locale]: catalog(locale) }}>
-        <Component {...pageProps} />
-      </I18nProvider>
+      <NextAuthProvider session={pageProps.session}>
+        <I18nProvider language={locale} catalogs={{ [locale]: catalog(locale) }}>
+          <Component {...pageProps} />
+        </I18nProvider>
+      </NextAuthProvider> 
     )
   }
 }

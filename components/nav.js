@@ -3,8 +3,10 @@ import Router from 'next/router'
 import Link from 'next/link'
 import classname from 'classname'
 import { Home, Search } from 'react-zondicons'
+import { signIn, signOut, useSession } from 'next-auth/client'
 
 export default function nav({defaultSearchText}) {
+  const [ session, loading ] = useSession()
   const searchInput = useRef()
   const [menuOpenState, setMenuOpenState] = useState(false)
   const toggleMenuOpenState = () => {
@@ -61,6 +63,16 @@ export default function nav({defaultSearchText}) {
       <a href='#' className='border-2 border-transparent mt-1 sm:ml-2'>Who we are</a>
       <a href='#' className='border-2 border-transparent mt-1 sm:ml-2'>FAQ</a>
       <a href='#' className='border-2 border-transparent mt-1 sm:ml-2'>Impressum</a>
+      {!session && <>
+        <button onClick={() => signIn('google')} className="bg-gray-300 hover:bg-gray-400 text-dark font-bold py-2 px-4 ml-4 rounded">
+          Sign In
+        </button>
+      </>}
+      {session && <>
+        <button onClick={signOut} className="border border-gray-400 bg-white hover:bg-gray-200 text-dark py-2 px-4 ml-4 rounded">
+          Sign Out
+        </button>
+      </>}
     </nav>
   </header>
   )
