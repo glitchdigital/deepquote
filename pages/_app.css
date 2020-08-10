@@ -2,8 +2,11 @@
 
 /* Begin custom styles */
 body {
-  @apply bg-white;
+  @apply bg-gray-100;
   font-family: -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+.bg-body {
+  @apply bg-gray-100;
 }
 h1 {
   @apply text-5xl font-thin;
@@ -24,6 +27,21 @@ header > nav > a {
     @apply underline text-blue-500;
   }
 }
+/* Small (sm) */
+@media (min-width: 640px) { /* ... */ }
+
+/* Medium (md) */
+@media (min-width: 768px) { 
+  .hero {
+    zoom: 1.5;
+  }
+}
+
+/* Large (lg) */
+@media (min-width: 1024px) { /* ... */ }
+
+/* Extra Large (xl) */
+@media (min-width: 1280px) { /* ... */ }
 .-zondicon {
   @apply relative leading-none fill-current inline mr-2 font-normal;
   height: 1.2rem;

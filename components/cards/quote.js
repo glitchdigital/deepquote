@@ -4,7 +4,7 @@ import { NewsPaper, Calendar } from 'react-zondicons'
 export default function quote({text, hash, source}) {
   return (
     <Link href={`/quote/[id]`} as={`/quote/${hash}`}>
-      <a className='no-underline block w-full mb-4 pb-2 border-2 border-gray-200 hover:shadow-lg hover:border-gray-300 text-gray-700 hover:text-gray-900 relative text-left rounded-lg bg-white'>
+      <a className='no-underline block w-full mb-4 pb-2 shadow-lg hover:shadow-xl hover:border-gray-300 text-gray-700 hover:text-gray-900 relative text-left rounded-lg bg-white'>
         <div className='mb-10 pb-5'>
           <p className='w-full pt-4 px-4 uppercase text-gray-600 font-extrabold'>
             <NewsPaper/>{source?.publisher || new URL(source?.url).hostname.replace(/^www\./, '')}

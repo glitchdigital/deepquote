@@ -16,7 +16,7 @@ import Link from 'next/link'
 
 export default function searchResult({text, hash}) {
   return (
-    <div className='rounded-lg bg-gray-300 mb-5'>
+    <div className='rounded-lg bg-white shadow-md mb-5'>
       <Link href={`/quote/[id]`} as={`/quote/${hash}`}>
         <a className='no-underline text-gray-800 hover:text-blue-500 px-4 py-6 block'>
           <h2 className='no-underline flex font-serif text-justify text-xl'>

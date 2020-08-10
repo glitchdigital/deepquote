@@ -9,6 +9,8 @@ export default function nav({defaultSearchText}) {
   const [ session, loading ] = useSession()
   const searchInput = useRef()
   const [menuOpenState, setMenuOpenState] = useState(false)
+  const [accountMenuOpenState, setAccountMenuOpenState] = useState(false)
+
   const toggleMenuOpenState = () => {
     // Set focus on search input when menu is opened
     if (!menuOpenState) setTimeout(() => searchInput.current.focus(), 100)
@@ -31,8 +33,8 @@ export default function nav({defaultSearchText}) {
     <div className='flex items-center justify-between px-4 py-3 sm:p-0'>
       <Link href='/'>
         <a className='no-underline hover:underline border-2 border-transparent text-gray-800 hover:text-blue-500'>
-          <span className='hidden sm:inline lg:hidden'><Home/></span>
-          <span className='inline sm:hidden lg:inline text-lg font-bold'>DeepQuote.io</span>
+          <span className='hidden sm:inline lg:hidden text-blue-600'><Home/></span>
+          <span className='inline sm:hidden lg:inline text-lg text-blue-600 font-bold'>DeepQuote.io</span>
         </a>
       </Link>
       <div className='sm:hidden'>
@@ -63,15 +65,71 @@ export default function nav({defaultSearchText}) {
       <a href='#' className='border-2 border-transparent mt-1 sm:ml-2'>Who we are</a>
       <a href='#' className='border-2 border-transparent mt-1 sm:ml-2'>FAQ</a>
       <a href='#' className='border-2 border-transparent mt-1 sm:ml-2'>Impressum</a>
-      {!session && <>
-        <button onClick={() => signIn('google')} className="bg-gray-300 hover:bg-gray-400 text-dark font-bold py-2 px-4 ml-4 rounded">
-          Sign In
+      {!loading && !session &&
+        <button onClick={() => signIn('google')} className='ml-1 bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded'>
+          Sign in
         </button>
-      </>}
+      }
       {session && <>
-        <button onClick={signOut} className="border border-gray-400 bg-white hover:bg-gray-200 text-dark py-2 px-4 ml-4 rounded">
-          Sign Out
-        </button>
+        <a href='#' 
+          className={classname(
+            'relative border-2 px-2 border-transparent sm:ml-2 text-gray-600 hover:text-gray-600',
+            { 'bg-blue-500 rounded-full': accountMenuOpenState },
+            { 'hover:bg-gray-100 rounded-full': !accountMenuOpenState },
+            { 'hidden': menuOpenState }
+          )}
+          onClick={(e) => {
+          e.preventDefault()
+          setAccountMenuOpenState(!accountMenuOpenState)
+        }}>
+          <svg 
+            className={classname(
+              'mt-1 h-6 w-6 fill-current',
+              { 'text-white': accountMenuOpenState },
+              { 'hidden': menuOpenState }
+            )}
+            viewBox='0 0 24 24' alt='Menu' aria-hidden='true'>
+            <path fillRule='evenodd' d='M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z'/>
+          </svg>
+          <div 
+            className='rounded-full absolute top-0 right-0'
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundImage: `url(${session.user.image})`
+            }} />
+        </a>
+
+        {(accountMenuOpenState || menuOpenState) &&
+          <div 
+            className={classname(
+              'font-normal',
+              { 'text-left mt-2': menuOpenState },
+              { 'absolute right-0 text-smx z-50 float-left text-right rounded shadow-lg bg-white mr-2': !menuOpenState }
+            )}
+            style={{minWidth: '10rem', top: '4rem', right: '1rem'}}
+          >
+          <p className='px-4 py-2 bg-blue-500 rounded-tl rounded-tr'>
+            <span className='block text-white'>
+              { session.user.email || session.user.name }
+            </span>
+          </p>
+          {/* <div className='h-0 border border-solid border-t-0 border-gray-400 opacity-25'/> */}
+          <p className='px-4 py-2'>
+            <a href='/api/auth/signout'
+              className='no-underline hover:underline block text-gray-600'
+              onClick={(e) => {
+                e.preventDefault()
+                signOut({callbackUrl: '/'})
+              }}
+              >
+              Sign out
+            </a>
+          </p>
+        </div>
+      }
       </>}
     </nav>
   </header>

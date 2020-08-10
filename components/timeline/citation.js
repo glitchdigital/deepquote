@@ -7,13 +7,16 @@ export default function timelineCitation({url, name, publisher, datePublished, s
   return (
     <>
       <div style={{width: 100}} className='z-30 flex-none hidden sm:block'>
-        <div style={{height: 50, width: 50}} className={classname('mt-5 m-auto border-4 rounded-full text-center pt-2 text-lg font-bold border-gray-400', suggestedResult ? 'bg-white text-gray-600' : 'bg-gray-400 text-gray-700')}>
+        <div style={{height: 50, width: 50}}
+          className={classname('mt-5 m-auto border-4 rounded-full text-center pt-2 text-lg font-bold border-blue-500',
+            suggestedResult ? 'bg-white text-blue-500' : 'bg-blue-500 text-white')
+          }>
           {position}
         </div>
       </div>
       <div className='z-30 flex-grow'>
-        <div className={classname('w-full text-left inline-block bg-white rounded-lg border-2', { 'bg-white shadow-xl border-2 border-gray-400': !suggestedResult })}>
-          {!suggestedResult && <span className={'absolute top-0 right-0 px-2 py-1 bg-gray-300 text-gray-800 font-bold rounded-bl rounded-tr text-sm'}>Exact match</span>}
+        <div className={classname('w-full text-left inline-block bg-white rounded-lg shadow-sm', { 'bg-white shadow-xl border-gray-400': !suggestedResult })}>
+          {!suggestedResult && <span className={'absolute top-0 right-0 px-2 py-1 bg-blue-500 text-white font-bold rounded-bl rounded-tr text-sm'}>Exact match</span>}
           <p className='pt-3 px-4 uppercase text-gray-600 font-extrabold'>
             <NewsPaper/>{publisher || new URL(url).hostname.replace(/^www\./, '')}
           </p>

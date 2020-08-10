@@ -17,16 +17,19 @@ const Page = (props) => {
   return (
     <>
       <Head title='DeepQuote' url={pageUrl}/>
-      <Nav />
-      <div className='pt-20 pb-20 text-center bg-gray-200'>
-        <h1 className='mb-2 mt-20 mx-2 text-gray-800 italic leading-tight text-6xl font-bold'>DeepQuote</h1>
-        <p className='text-xl md:text-2xl text-gray-600 mb-20 font-semibold'>Find the earliest evidence of a quote</p>
+      <Nav/>
+      <div className='pt-20 pb-20 text-center bg-gray-100 relative'>
+        <div className='hero'>
+          <h1 className='mb-2 mt-20 mx-2 text-blue-600 leading-tight sm:text-5xl md:text-6xl  font-bold'>DeepQuote</h1>
+          <p className='sm:text-lg md:text-xl text-blue-700 mb-20'>Find the earliest evidence of a quote</p>
+        </div>
       </div>
-      <div className='relative pt-2 bg-gray-100 border-t pb-0 overflow-auto' style={{minHeight: 100}}>
+      <div className='relative pt-2 bg-gray-100 pb-0 overflow-auto' style={{minHeight: 100}}>
         <div className="block absolute w-full bottom-0 z-10"
           style={{
-            height: 100,
-            backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))'
+            pointerEvents: 'none',
+            height: 200,
+            backgroundImage: 'linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(247, 250, 252, 1))'
           }}
         />
         <div className='m-auto w-full max-w-screen-xl px-2 py-4 lg:px-2 lg:py-2'>
