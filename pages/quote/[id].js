@@ -46,7 +46,7 @@ const Page = (props) => {
                 </div>
               </div>
               <div className='relative pt-6'>
-                <div className='absolute flex z-10' style={{
+                <div className='absolute flex z-10 border-gray-400' style={{
                     width: '10px',
                     top: -40,
                     bottom: 0,
