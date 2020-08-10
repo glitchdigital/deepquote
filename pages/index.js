@@ -11,16 +11,16 @@ import { version } from 'package.json'
 const QUOTES_API_ENDPOINT = '/api/quotes'
 
 const Page = (props) => {
-  const { url } = props
+  const { pageUrl } = props
   const [ quotes, loading ] = useFetch(QUOTES_API_ENDPOINT, props.quotes)
 
   return (
     <>
-      <Head title='Did They Really Say That?' url={url}/>
+      <Head title='DeepQuote' url={pageUrl}/>
       <Nav />
       <div className='pt-20 pb-20 text-center'>
-        <h1 className='mb-2 mt-10 mx-2 leading-tight text-5xl lg:text-6xl font-bold'>Did they really say that?</h1>
-        <p className='text-lg md:text-3xl text-gray-600 mb-10 font-semibold'>Find the earliest evidence of a quote</p>
+        <h1 className='mb-2 mt-20 mx-2 leading-tight text-6xl font-bold'>DeepQuote</h1>
+        <p className='text-lg md:text-3xl text-gray-600 mb-20 font-semibold'>Find the earliest evidence of a quote</p>
       </div>
       <div className='relative mt-4 bg-gray-100 border-t pb-0 overflow-auto' style={{minHeight: 100}}>
         <div className="block absolute w-full bottom-0 z-10"
@@ -57,7 +57,7 @@ Page.getInitialProps = async ({res}) => {
 
   return {
     quotes,
-    url: HOSTNAME
+    pageUrl: HOSTNAME
   }
 }
 

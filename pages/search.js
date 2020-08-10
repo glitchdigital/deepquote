@@ -10,7 +10,7 @@ import Spinner from 'components/spinner'
 const SEARCH_API_ENDPOINT = (searchText) => `/api/search?t=${encodeURIComponent(searchText)}`
 
 const Page = (props) => {
-  const { t: searchText = '', url } = props.query
+  const { t: searchText = '', pageUrl } = props.query
   const [loading, setLoading] = useState(false)
   const [searchResults, setSearchResults] = useState(props.searchResults)
 
@@ -38,7 +38,7 @@ const Page = (props) => {
   
   return (
     <>
-      <Head title="Search" url={url}/>
+      <Head title="Search" url={pageUrl}/>
       <Nav defaultSearchText={searchText} />
       <div className='text-center py-5 relative m-auto px-5 max-w-screen-md px-5'>
         {!loading && searchText.length > 0 && searchResults && searchResults.length === 0 && 
@@ -80,7 +80,7 @@ Page.getInitialProps = async ({query, res}) => {
   return {
     query,
     searchResults,
-    url: `${HOSTNAME}/search`
+    pageUrl: `${HOSTNAME}/search`
   }
 }
 

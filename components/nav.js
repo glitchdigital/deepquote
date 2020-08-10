@@ -30,7 +30,7 @@ export default function nav({defaultSearchText}) {
       <Link href='/'>
         <a className='no-underline hover:underline border-2 border-transparent text-gray-800 hover:text-blue-500'>
           <span className='hidden sm:inline lg:hidden'><Home/></span>
-          <span className='inline sm:hidden lg:inline text-lg font-bold'>Did They Really Say That?</span>
+          <span className='inline sm:hidden lg:inline text-lg font-bold'>DeepQuote.io</span>
         </a>
       </Link>
       <div className='sm:hidden'>

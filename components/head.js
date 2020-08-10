@@ -24,8 +24,6 @@ export default function head(props) {
       <meta property='og:image' content={props.ogImage || defaultOGImage} />
       <meta property='og:image:width' content='1200' />
       <meta property='og:image:height' content='630' />
-      {/* https://fonts.google.com/specimen/Nunito */ }
-      <link href='https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap' rel='stylesheet' />
     </NextHead>
   )
 }
