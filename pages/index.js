@@ -18,13 +18,13 @@ const Page = (props) => {
     <>
       <Head title='DeepQuote' url={pageUrl}/>
       <Nav/>
-      <div className='pt-20 pb-20 text-center bg-gray-100 relative'>
+      <div className='pt-10 pb-10 text-center relative'>
         <div className='hero'>
-          <h1 className='mb-2 mt-20 mx-2 text-blue-600 leading-tight sm:text-5xl md:text-6xl  font-bold'>DeepQuote</h1>
-          <p className='sm:text-lg md:text-xl text-blue-700 mb-20'>Find the earliest evidence of a quote</p>
+          <h1 className='mb-2 mt-20 mx-2 text-gray-800 leading-tight text-5xl font-semibold'>DeepQuote</h1>
+          <p className='text-gray-700 mb-20'>Find the earliest evidence of a quote</p>
         </div>
       </div>
-      <div className='relative pt-2 bg-gray-100 pb-0 overflow-auto' style={{minHeight: 100}}>
+      <div className='relative pt-2 pb-0 overflow-auto' style={{minHeight: 100}}>
         <div className="block absolute w-full bottom-0 z-10"
           style={{
             pointerEvents: 'none',

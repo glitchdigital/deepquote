@@ -1,13 +1,15 @@
 @tailwind base;
 
 /* Begin custom styles */
-body {
-  @apply bg-gray-100;
-  font-family: -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-}
+body,
 .bg-body {
   @apply bg-gray-100;
 }
+
+body {
+  font-family: -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
 h1 {
   @apply text-5xl font-thin;
 }

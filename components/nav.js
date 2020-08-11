@@ -33,8 +33,8 @@ export default function nav({defaultSearchText}) {
     <div className='flex items-center justify-between px-4 py-3 sm:p-0'>
       <Link href='/'>
         <a className='no-underline hover:underline border-2 border-transparent text-gray-800 hover:text-blue-500'>
-          <span className='hidden sm:inline lg:hidden text-blue-600'><Home/></span>
-          <span className='inline sm:hidden lg:inline text-lg text-blue-600 font-bold'>DeepQuote.io</span>
+          <span className='hidden sm:inline lg:hidden'><Home/></span>
+          <span className='inline sm:hidden lg:inline text-lg font-semibold'>DeepQuote.io</span>
         </a>
       </Link>
       <div className='sm:hidden'>
