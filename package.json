@@ -28,7 +28,7 @@
     "dotenv": "^8.2.0",
     "entity-finder": "^0.5.2",
     "isomorphic-fetch": "^2.2.1",
-    "jsdom": "^16.4.0",
+    "jsdom": "^16.5.0",
     "lorem-ipsum": "^2.0.3",
     "micro": "^9.3.4",
     "micro-query": "^0.3.0",
