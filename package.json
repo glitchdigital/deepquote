@@ -62,7 +62,7 @@
     "@lingui/cli": "^2.9.1",
     "@lingui/loader": "^2.9.1",
     "@lingui/macro": "^2.9.1",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "npm-check-updates": "^7.0.3"
   }
 }
